@@ -61,3 +61,7 @@ Etwa zwei bis drei Minuten: Tiefenabstand in der Zwei-Linien-Szene ändern;
 zur Bündelszene wechseln; Modi bei fester Kamera vergleichen; optional Depth
 Cueing isolieren; einen Grenzfall zeigen. Gespeicherte Zustände machen diesen
 Ablauf reproduzierbar. Ein kurzer Mitschnitt kann später dieselbe Abfolge sichern.
+
+## Umgesetzter Stand
+
+Drei Tabulatoransichten starten unmittelbar im Renderer. Methodenvergleich als umschaltbare große Ansicht mit gemeinsamem Zustand; keine redundanten Vergleichskameras. Zwei Grenzfall-Presets (Verdeckung/Tiefengleichheit), Front-/Schrägkamera und globales Reset machen die Vorführung reproduzierbar. Parameter zeigen Einheiten/Werte. Diagnoselegende und Quellen-/Auswahlkennzeichnung stehen an der Zeichenfläche. Aufnahmen bei1280×720 und1920×1080 wurden geprüft; Hauptszene, Methodenwahl und Kernregler sind ohne Scrollen erreichbar. Ausführliche Herkunft und Grenzen liegen in aufklappbaren Bereichen.
