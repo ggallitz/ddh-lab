@@ -1,0 +1,1050 @@
+{
+  "schema_version": 1,
+  "manifest_checked_on": "2026-10-26",
+  "sources": [
+    {
+      "id": "demo",
+      "filename": "DepthDependentHalos.zip",
+      "url": "https://tobias.isenberg.cc/personal/demos/DepthDependentHalos.zip",
+      "bytes": 28649944,
+      "sha256": "dcd8407e3e11aa6f6f2bbcdaf8042edb3a7c35889f0e5586a30be226fdc7424f",
+      "matches_manifest": true,
+      "archive_entries": [
+        {
+          "path": "illuvis-program/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/data/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/data/Air flow in office/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/data/Air flow in office/description.ini",
+          "bytes": 394,
+          "compressed_bytes": 192,
+          "crc32": "37f64706",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/data/Air flow in office/officeflow.sop",
+          "bytes": 3349367,
+          "compressed_bytes": 2898445,
+          "crc32": "b8729ab2",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/data/Fiber tracts/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/data/Fiber tracts/description.ini",
+          "bytes": 373,
+          "compressed_bytes": 195,
+          "crc32": "38e1263f",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/data/Fiber tracts/fibertractselection.sop",
+          "bytes": 8836947,
+          "compressed_bytes": 7851374,
+          "crc32": "c639d303",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/data/Knot 10_136/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/data/Knot 10_136/description.ini",
+          "bytes": 181,
+          "compressed_bytes": 134,
+          "crc32": "f8d7390e",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/data/Knot 10_136/knot10_136.sop",
+          "bytes": 9063,
+          "compressed_bytes": 8374,
+          "crc32": "2a26c0ea",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/data/Knot 9_31/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/data/Knot 9_31/description.ini",
+          "bytes": 179,
+          "compressed_bytes": 133,
+          "crc32": "1321ee3b",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/data/Knot 9_31/knot9_31.sop",
+          "bytes": 11559,
+          "compressed_bytes": 10730,
+          "crc32": "813895b0",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/data/Pointdata - Dragon/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/data/Pointdata - Dragon/description.ini",
+          "bytes": 398,
+          "compressed_bytes": 199,
+          "crc32": "f9409644",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/data/Pointdata - Dragon/dragon.sop",
+          "bytes": 5251779,
+          "compressed_bytes": 2978597,
+          "crc32": "776a5c05",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/data/Water flow/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/data/Water flow/description.ini",
+          "bytes": 392,
+          "compressed_bytes": 200,
+          "crc32": "ef384ec9",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/data/Water flow/wasserflow.sop",
+          "bytes": 15622975,
+          "compressed_bytes": 13219466,
+          "crc32": "a9f67972",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/linux/illuvis32",
+          "bytes": 903833,
+          "compressed_bytes": 337831,
+          "crc32": "a32c2637",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/illuvis64",
+          "bytes": 1118781,
+          "compressed_bytes": 371848,
+          "crc32": "9188ad14",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/shaders/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/linux/shaders/fragmentshader-lines-filter.glsl",
+          "bytes": 1344,
+          "compressed_bytes": 519,
+          "crc32": "fb387b6a",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/shaders/fragmentshader-lines.glsl",
+          "bytes": 1058,
+          "compressed_bytes": 424,
+          "crc32": "11f2137e",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/shaders/fragmentshader-points-filter.glsl",
+          "bytes": 640,
+          "compressed_bytes": 310,
+          "crc32": "9e7f0c92",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/shaders/fragmentshader-points.glsl",
+          "bytes": 506,
+          "compressed_bytes": 273,
+          "crc32": "be0295f9",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/shaders/vertexshader-lines-filter.glsl",
+          "bytes": 639,
+          "compressed_bytes": 325,
+          "crc32": "c7b2fdbf",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/shaders/vertexshader-lines.glsl",
+          "bytes": 553,
+          "compressed_bytes": 299,
+          "crc32": "6b481385",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/shaders/vertexshader-points-filter.glsl",
+          "bytes": 407,
+          "compressed_bytes": 225,
+          "crc32": "458c837f",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/shaders/vertexshader-points.glsl",
+          "bytes": 321,
+          "compressed_bytes": 187,
+          "crc32": "344999dc",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/textures/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/linux/textures/colormap01.png",
+          "bytes": 257,
+          "compressed_bytes": 252,
+          "crc32": "e8036785",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/textures/colormap02.png",
+          "bytes": 342,
+          "compressed_bytes": 341,
+          "crc32": "565502c2",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/textures/colormap03.png",
+          "bytes": 263,
+          "compressed_bytes": 258,
+          "crc32": "9b40c56d",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/textures/colormap04.png",
+          "bytes": 309,
+          "compressed_bytes": 307,
+          "crc32": "fa69856e",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/textures/colormap05.png",
+          "bytes": 356,
+          "compressed_bytes": 356,
+          "crc32": "4ecfec1e",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/textures/colormap06.png",
+          "bytes": 3135,
+          "compressed_bytes": 3135,
+          "crc32": "f1a10a60",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/textures/stripmasktexture-nomask.png",
+          "bytes": 392,
+          "compressed_bytes": 197,
+          "crc32": "f3f197f2",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/textures/stripmasktexture01.png",
+          "bytes": 952,
+          "compressed_bytes": 888,
+          "crc32": "6288b295",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/textures/stroketexture01.png",
+          "bytes": 241,
+          "compressed_bytes": 204,
+          "crc32": "54487597",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/linux/textures/stroketexture02.png",
+          "bytes": 2920,
+          "compressed_bytes": 2920,
+          "crc32": "313353f9",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/osx/illuvis",
+          "bytes": 380724,
+          "compressed_bytes": 126403,
+          "crc32": "ae3f26fa",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/shaders/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/osx/shaders/fragmentshader-lines-filter.glsl",
+          "bytes": 1344,
+          "compressed_bytes": 519,
+          "crc32": "fb387b6a",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/shaders/fragmentshader-lines.glsl",
+          "bytes": 1058,
+          "compressed_bytes": 424,
+          "crc32": "11f2137e",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/shaders/fragmentshader-points-filter.glsl",
+          "bytes": 640,
+          "compressed_bytes": 310,
+          "crc32": "9e7f0c92",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/shaders/fragmentshader-points.glsl",
+          "bytes": 506,
+          "compressed_bytes": 273,
+          "crc32": "be0295f9",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/shaders/vertexshader-lines-filter.glsl",
+          "bytes": 639,
+          "compressed_bytes": 325,
+          "crc32": "c7b2fdbf",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/shaders/vertexshader-lines.glsl",
+          "bytes": 553,
+          "compressed_bytes": 299,
+          "crc32": "6b481385",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/shaders/vertexshader-points-filter.glsl",
+          "bytes": 407,
+          "compressed_bytes": 225,
+          "crc32": "458c837f",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/shaders/vertexshader-points.glsl",
+          "bytes": 321,
+          "compressed_bytes": 187,
+          "crc32": "344999dc",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/textures/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/osx/textures/colormap01.png",
+          "bytes": 257,
+          "compressed_bytes": 252,
+          "crc32": "e8036785",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/textures/colormap02.png",
+          "bytes": 342,
+          "compressed_bytes": 341,
+          "crc32": "565502c2",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/textures/colormap03.png",
+          "bytes": 263,
+          "compressed_bytes": 258,
+          "crc32": "9b40c56d",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/textures/colormap04.png",
+          "bytes": 309,
+          "compressed_bytes": 307,
+          "crc32": "fa69856e",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/textures/colormap05.png",
+          "bytes": 356,
+          "compressed_bytes": 356,
+          "crc32": "4ecfec1e",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/textures/colormap06.png",
+          "bytes": 3135,
+          "compressed_bytes": 3135,
+          "crc32": "f1a10a60",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/textures/stripmasktexture-nomask.png",
+          "bytes": 392,
+          "compressed_bytes": 197,
+          "crc32": "f3f197f2",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/textures/stripmasktexture01.png",
+          "bytes": 952,
+          "compressed_bytes": 888,
+          "crc32": "6288b295",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/textures/stroketexture01.png",
+          "bytes": 241,
+          "compressed_bytes": 204,
+          "crc32": "54487597",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/osx/textures/stroketexture02.png",
+          "bytes": 2920,
+          "compressed_bytes": 2920,
+          "crc32": "313353f9",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/README.txt",
+          "bytes": 4565,
+          "compressed_bytes": 2121,
+          "crc32": "95da58a9",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/win32/freeglut.dll",
+          "bytes": 274432,
+          "compressed_bytes": 105237,
+          "crc32": "e53013b7",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/glew32.dll",
+          "bytes": 245760,
+          "compressed_bytes": 72903,
+          "crc32": "c076b8cf",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/illuvis.exe",
+          "bytes": 152064,
+          "compressed_bytes": 73361,
+          "crc32": "a10a9799",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/Microsoft.VC90.CRT.manifest",
+          "bytes": 1857,
+          "compressed_bytes": 597,
+          "crc32": "74f0803e",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/msvcm90.dll",
+          "bytes": 225280,
+          "compressed_bytes": 66712,
+          "crc32": "d3afd853",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/msvcp90.dll",
+          "bytes": 572928,
+          "compressed_bytes": 156712,
+          "crc32": "9a360c9e",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/msvcr90.dll",
+          "bytes": 655872,
+          "compressed_bytes": 318912,
+          "crc32": "72433ad8",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/shaders/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/win32/shaders/fragmentshader-lines-filter.glsl",
+          "bytes": 1400,
+          "compressed_bytes": 527,
+          "crc32": "d8beb932",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/shaders/fragmentshader-lines.glsl",
+          "bytes": 1104,
+          "compressed_bytes": 434,
+          "crc32": "e5c8192f",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/shaders/fragmentshader-points-filter.glsl",
+          "bytes": 669,
+          "compressed_bytes": 317,
+          "crc32": "ebf3da2d",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/shaders/fragmentshader-points.glsl",
+          "bytes": 529,
+          "compressed_bytes": 279,
+          "crc32": "9d5224c7",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/shaders/vertexshader-lines-filter.glsl",
+          "bytes": 663,
+          "compressed_bytes": 331,
+          "crc32": "517485f6",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/shaders/vertexshader-lines.glsl",
+          "bytes": 574,
+          "compressed_bytes": 306,
+          "crc32": "935828eb",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/shaders/vertexshader-points-filter.glsl",
+          "bytes": 421,
+          "compressed_bytes": 228,
+          "crc32": "28ab29ed",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/shaders/vertexshader-points.glsl",
+          "bytes": 332,
+          "compressed_bytes": 192,
+          "crc32": "086fa944",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/textures/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "illuvis-program/win32/textures/stripmasktexture-nomask.png",
+          "bytes": 392,
+          "compressed_bytes": 197,
+          "crc32": "f3f197f2",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/textures/stripmasktexture01.png",
+          "bytes": 952,
+          "compressed_bytes": 888,
+          "crc32": "6288b295",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/textures/stroketexture01.png",
+          "bytes": 241,
+          "compressed_bytes": 204,
+          "crc32": "54487597",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/textures/stroketexture02.png",
+          "bytes": 2920,
+          "compressed_bytes": 2920,
+          "crc32": "313353f9",
+          "directory": false
+        },
+        {
+          "path": "illuvis-program/win32/textures/Thumbs.db",
+          "bytes": 6656,
+          "compressed_bytes": 1757,
+          "crc32": "ff7137ad",
+          "directory": false
+        }
+      ]
+    },
+    {
+      "id": "io",
+      "filename": "sop_lines_io.zip",
+      "url": "https://tobias.isenberg.cc/uploads/VideosAndDemos/sop_lines_io.zip",
+      "bytes": 13064,
+      "sha256": "c27745ebe25ae5fd04cd98c130eda610bc74afbd337eadee0d437fed09f9ce9a",
+      "matches_manifest": true,
+      "archive_entries": [
+        {
+          "path": "lines_io/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "lines_io/c/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "lines_io/c/dseq.c",
+          "bytes": 1102,
+          "compressed_bytes": 392,
+          "crc32": "d7faf1de",
+          "directory": false
+        },
+        {
+          "path": "lines_io/c/dseq.h",
+          "bytes": 521,
+          "compressed_bytes": 265,
+          "crc32": "81dc6559",
+          "directory": false
+        },
+        {
+          "path": "lines_io/c/lines.c",
+          "bytes": 3885,
+          "compressed_bytes": 1153,
+          "crc32": "a4941a22",
+          "directory": false
+        },
+        {
+          "path": "lines_io/c/lines.h",
+          "bytes": 1748,
+          "compressed_bytes": 586,
+          "crc32": "5e6b1ab6",
+          "directory": false
+        },
+        {
+          "path": "lines_io/c/lines_io.c",
+          "bytes": 8194,
+          "compressed_bytes": 2048,
+          "crc32": "51cc3c5f",
+          "directory": false
+        },
+        {
+          "path": "lines_io/c/lines_io.h",
+          "bytes": 596,
+          "compressed_bytes": 215,
+          "crc32": "dbdfec63",
+          "directory": false
+        },
+        {
+          "path": "lines_io/c/sarray.c",
+          "bytes": 2582,
+          "compressed_bytes": 695,
+          "crc32": "618d4cab",
+          "directory": false
+        },
+        {
+          "path": "lines_io/c/sarray.h",
+          "bytes": 771,
+          "compressed_bytes": 326,
+          "crc32": "65cd2ad8",
+          "directory": false
+        },
+        {
+          "path": "lines_io/python/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "lines_io/python/dataio/",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": true
+        },
+        {
+          "path": "lines_io/python/dataio/__init__.py",
+          "bytes": 0,
+          "compressed_bytes": 0,
+          "crc32": "00000000",
+          "directory": false
+        },
+        {
+          "path": "lines_io/python/dataio/linesfile.py",
+          "bytes": 2915,
+          "compressed_bytes": 989,
+          "crc32": "c45b1e16",
+          "directory": false
+        },
+        {
+          "path": "lines_io/python/dataio/sldfile.py",
+          "bytes": 2008,
+          "compressed_bytes": 863,
+          "crc32": "511d679d",
+          "directory": false
+        },
+        {
+          "path": "lines_io/python/dataio/sopfile.py",
+          "bytes": 2945,
+          "compressed_bytes": 1147,
+          "crc32": "ea42cb96",
+          "directory": false
+        },
+        {
+          "path": "lines_io/python/dataio/trkfile.py",
+          "bytes": 2295,
+          "compressed_bytes": 876,
+          "crc32": "e41244d2",
+          "directory": false
+        },
+        {
+          "path": "lines_io/python/lineconv.py",
+          "bytes": 1205,
+          "compressed_bytes": 375,
+          "crc32": "760700e4",
+          "directory": false
+        }
+      ]
+    },
+    {
+      "id": "paper",
+      "filename": "Everts_2009_DDH.pdf",
+      "url": "https://tobias.isenberg.cc/personal/papers/Everts_2009_DDH.pdf",
+      "bytes": 7348252,
+      "sha256": "da09d59bfb350c0a683e39011ca238a0577b6643d34aeed6f679cedf7f46a41e",
+      "matches_manifest": true,
+      "pdf_signature": "%PDF-1.4",
+      "inspection_scope": "File hash, size and PDF signature only; PDF content was not parsed."
+    }
+  ],
+  "datasets": [
+    {
+      "source_id": "demo",
+      "name": "Air flow in office",
+      "path": "illuvis-program/data/Air flow in office/officeflow.sop",
+      "description_path": "illuvis-program/data/Air flow in office/description.ini",
+      "bytes": 3349367,
+      "sha256": "bbf9b644a411afe29ec497f672f61a27d481a6322eed705d62cf957b956fb6ac",
+      "header": {
+        "version": 0,
+        "endian": 0,
+        "magic": 14600958,
+        "dim": 3,
+        "dtype": 1,
+        "nseq": 786,
+        "dataStart": 35,
+        "numAttributes": 0,
+        "attrSize": 4
+      },
+      "data_type": "lines",
+      "sequence_count": 786,
+      "point_count": 278849,
+      "segment_count": 278063,
+      "points_per_sequence": {
+        "min": 2,
+        "max": 2610,
+        "mean": 354.76972010178116
+      },
+      "bounds": {
+        "min": [
+          0.01003700029104948,
+          0.04182619974017143,
+          0.039224300533533096
+        ],
+        "max": [
+          4.498849868774414,
+          4.5,
+          2.4996399879455566
+        ]
+      },
+      "attribute_ranges": [],
+      "header_to_data_padding_bytes": 3,
+      "trailing_bytes": 0
+    },
+    {
+      "source_id": "demo",
+      "name": "Fiber tracts",
+      "path": "illuvis-program/data/Fiber tracts/fibertractselection.sop",
+      "description_path": "illuvis-program/data/Fiber tracts/description.ini",
+      "bytes": 8836947,
+      "sha256": "2ee097398ab88304da9185b43a71112b612d7a19629d70a43a4eec3a957d4221",
+      "header": {
+        "version": 0,
+        "endian": 0,
+        "magic": 14600958,
+        "dim": 3,
+        "dtype": 1,
+        "nseq": 17176,
+        "dataStart": 35,
+        "numAttributes": 1,
+        "attrSize": 4
+      },
+      "data_type": "lines",
+      "sequence_count": 17176,
+      "point_count": 548013,
+      "segment_count": 530837,
+      "points_per_sequence": {
+        "min": 3,
+        "max": 169,
+        "mean": 31.905740568234748
+      },
+      "bounds": {
+        "min": [
+          63.611351013183594,
+          32.967689514160156,
+          0.00017600000137463212
+        ],
+        "max": [
+          201.5,
+          202.9785614013672,
+          93.58678436279297
+        ]
+      },
+      "attribute_ranges": [
+        {
+          "min": 0.0,
+          "max": 1184.182373046875
+        }
+      ],
+      "header_to_data_padding_bytes": 3,
+      "trailing_bytes": 0
+    },
+    {
+      "source_id": "demo",
+      "name": "Knot 10_136",
+      "path": "illuvis-program/data/Knot 10_136/knot10_136.sop",
+      "description_path": "illuvis-program/data/Knot 10_136/description.ini",
+      "bytes": 9063,
+      "sha256": "73f63e7bbf341b22d7916f87255c42fdec529ee7a528e2cc8f67a2db4d91ac4a",
+      "header": {
+        "version": 0,
+        "endian": 0,
+        "magic": 14600958,
+        "dim": 3,
+        "dtype": 1,
+        "nseq": 1,
+        "dataStart": 35,
+        "numAttributes": 0,
+        "attrSize": 4
+      },
+      "data_type": "lines",
+      "sequence_count": 1,
+      "point_count": 752,
+      "segment_count": 751,
+      "points_per_sequence": {
+        "min": 752,
+        "max": 752,
+        "mean": 752.0
+      },
+      "bounds": {
+        "min": [
+          -6.181695461273193,
+          -7.050518035888672,
+          -3.145141363143921
+        ],
+        "max": [
+          6.030727863311768,
+          7.882359027862549,
+          3.6586673259735107
+        ]
+      },
+      "attribute_ranges": [],
+      "header_to_data_padding_bytes": 3,
+      "trailing_bytes": 0
+    },
+    {
+      "source_id": "demo",
+      "name": "Knot 9_31",
+      "path": "illuvis-program/data/Knot 9_31/knot9_31.sop",
+      "description_path": "illuvis-program/data/Knot 9_31/description.ini",
+      "bytes": 11559,
+      "sha256": "03afa1810975e8e9a5d0e8753b0b1199fd47dd9221fc9cc4bd491ebc5e9a89be",
+      "header": {
+        "version": 0,
+        "endian": 0,
+        "magic": 14600958,
+        "dim": 3,
+        "dtype": 1,
+        "nseq": 1,
+        "dataStart": 35,
+        "numAttributes": 0,
+        "attrSize": 4
+      },
+      "data_type": "lines",
+      "sequence_count": 1,
+      "point_count": 960,
+      "segment_count": 959,
+      "points_per_sequence": {
+        "min": 960,
+        "max": 960,
+        "mean": 960.0
+      },
+      "bounds": {
+        "min": [
+          -8.882051467895508,
+          -8.940689086914062,
+          -3.7285122871398926
+        ],
+        "max": [
+          9.104497909545898,
+          8.559147834777832,
+          3.2630374431610107
+        ]
+      },
+      "attribute_ranges": [],
+      "header_to_data_padding_bytes": 3,
+      "trailing_bytes": 0
+    },
+    {
+      "source_id": "demo",
+      "name": "Pointdata - Dragon",
+      "path": "illuvis-program/data/Pointdata - Dragon/dragon.sop",
+      "description_path": "illuvis-program/data/Pointdata - Dragon/description.ini",
+      "bytes": 5251779,
+      "sha256": "85e3004d21570f71a5528c57da541308bed9ed65438e73c97d18b8fcf15c301e",
+      "header": {
+        "version": 0,
+        "endian": 0,
+        "magic": 14600958,
+        "dim": 3,
+        "dtype": 1,
+        "nseq": 1,
+        "dataStart": 35,
+        "numAttributes": 0,
+        "attrSize": 4
+      },
+      "data_type": "points",
+      "sequence_count": 1,
+      "point_count": 437645,
+      "segment_count": null,
+      "points_per_sequence": {
+        "min": 437645,
+        "max": 437645,
+        "mean": 437645.0
+      },
+      "bounds": {
+        "min": [
+          -0.10832399874925613,
+          0.05272949859499931,
+          -0.050414301455020905
+        ],
+        "max": [
+          0.09656620025634766,
+          0.19717299938201904,
+          0.04120749980211258
+        ]
+      },
+      "attribute_ranges": [],
+      "header_to_data_padding_bytes": 3,
+      "trailing_bytes": 0
+    },
+    {
+      "source_id": "demo",
+      "name": "Water flow",
+      "path": "illuvis-program/data/Water flow/wasserflow.sop",
+      "description_path": "illuvis-program/data/Water flow/description.ini",
+      "bytes": 15622975,
+      "sha256": "020dca39f968a4fa37d4a4d7ddb5d4b83271a4c14a7ab12dd871881f98ccad9e",
+      "header": {
+        "version": 0,
+        "endian": 0,
+        "magic": 14600958,
+        "dim": 3,
+        "dtype": 1,
+        "nseq": 1400,
+        "dataStart": 35,
+        "numAttributes": 0,
+        "attrSize": 4
+      },
+      "data_type": "lines",
+      "sequence_count": 1400,
+      "point_count": 1301445,
+      "segment_count": 1300045,
+      "points_per_sequence": {
+        "min": 80,
+        "max": 5004,
+        "mean": 929.6035714285714
+      },
+      "bounds": {
+        "min": [
+          0.09586749970912933,
+          0.18784299492835999,
+          0.053888000547885895
+        ],
+        "max": [
+          127.73899841308594,
+          83.83560180664062,
+          41.13169860839844
+        ]
+      },
+      "attribute_ranges": [],
+      "header_to_data_padding_bytes": 3,
+      "trailing_bytes": 0
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "checked_on": "2026-10-26",
+  "sources": [
+    {
+      "id": "demo",
+      "filename": "DepthDependentHalos.zip",
+      "url": "https://tobias.isenberg.cc/personal/demos/DepthDependentHalos.zip",
+      "bytes": 28649944,
+      "sha256": "dcd8407e3e11aa6f6f2bbcdaf8042edb3a7c35889f0e5586a30be226fdc7424f"
+    },
+    {
+      "id": "io",
+      "filename": "sop_lines_io.zip",
+      "url": "https://tobias.isenberg.cc/uploads/VideosAndDemos/sop_lines_io.zip",
+      "bytes": 13064,
+      "sha256": "c27745ebe25ae5fd04cd98c130eda610bc74afbd337eadee0d437fed09f9ce9a"
+    },
+    {
+      "id": "paper",
+      "filename": "Everts_2009_DDH.pdf",
+      "url": "https://tobias.isenberg.cc/personal/papers/Everts_2009_DDH.pdf",
+      "bytes": 7348252,
+      "sha256": "da09d59bfb350c0a683e39011ca238a0577b6643d34aeed6f679cedf7f46a41e"
+    }
+  ]
+}
