@@ -56,13 +56,13 @@ Internetzugang arbeiten können.
 | Phase | Status | Konkreter Nachweis / offene Prüfung |
 |---|---|---|
 | M0 | erfüllt | ARM64 Ubuntu 26.04.1, Node 24.21.0/npm 11.19.0, Python 3.14.4; drei Quellen hashverifiziert; Fachkonventionen in RESEARCH |
-| M1 | offen | Grafikprobe |
+| M1 | erfüllt | WebGL2/GLSL kompiliert; Diagnosepixel 120→132 belegt veränderte Fenstertiefe und Verdeckung auf Chromium/SwiftShader |
 | M2 | offen | Renderer und unabhängige Prüffälle |
 | M3 | offen | Import und Szenen |
 | M4 | offen | Erklärung und Bedienung |
 | M5 | offen | Vollständiger Durchlauf |
 
-Aktueller nächster Schritt: M1/M2 — lokale WebGL2-Probe mit messbaren Verdeckungsübergängen.
+Aktueller nächster Schritt: M2 — Kernprüfungen vervollständigen, danach Daten und Lehransichten integrieren.
 
 ## Wesentliche Entscheidungen
 
@@ -75,3 +75,7 @@ Keine zweite Statusdatei anlegen.
 Direktes WebGL2 statt Three.js: orthografische Projektion und wenige Polylinien benötigen keinen Szenengraph; eigene Shader und expliziter Tiefentest erleichtern wissenschaftliche Messungen. TypeScript/Vite bleiben, kein UI-Framework. Offline-Ressourcen werden lokal vorbereitet, keine CDNs. S/L sind vollständige Breiten in Framebuffer-Pixeln; dmax und delta verwenden Fenstertiefe. Orthografisch gilt nach Kamerarotation z_window=0.5+z_camera/4. Analytisches Profil, Bildschirmbreite, Miter-Joins und begrenztes Cueing sind eigene Abweichungen. Risiken: Raster-Ties, Joins an scharfen Ecken, CPU/GPU-Speicher großer Daten, browserabhängige Software-Grafik. Historische x86-Binärdateien auf ARM64 nicht ausgeführt.
 
 Git-Identität lokal vorhanden (Georg Gallitz). Die vorgefundenen unversionierten Vorgabedateien werden als explizite Projektgrundlage aufgenommen; Originalarchive und lokale Daten bleiben ignoriert.
+
+### M1 — Grafikprobe und Review
+
+Chromium Headless Shell 148.0.7778.96 (Build 1248; genaue Browserversion beim Abschluss erneut protokollieren), WebGL 2.0, ANGLE Vulkan 1.3.0 / SwiftShader LLVM 10.0.0. Keine Hardwarebeschleunigung behauptet. Fehlende dynamische Bibliotheken ausschließlich als Projektdateien unter .cache/browser-libs entpackt; keine Systempakete installiert. Lokaler Testserver Port 4178, kein fremder Server wiederverwendet. GLSL-Review behob unterschiedliche int-Uniform-Präzision. Gemessene Diagnosewerte bei delta=.06: schwarze Mitte 120/255 (z=.47), weißes Fragment r=5.5px 132/255 (z≈.51714). Eine unveränderte Tiefe könnte dieses Ergebnis nicht liefern. Unabhängiger Quellenreview bestätigt den Kern; Cueing korrigiert, sodass nur L variiert und S konstant bleibt.
