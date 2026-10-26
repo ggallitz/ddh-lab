@@ -32,11 +32,12 @@ void main(){
  vec2 n2=normalize(vec2(-after.y,after.x));
  vec2 m=n1+n2;if(length(m)<0.0001)m=n2;else m=normalize(m);
  float scale=min(2.0,1.0/max(0.01,abs(dot(m,n2))));
- float width=mode==0?lineWidth:stripWidth;
+ float width=stripWidth;
  // Explicit teaching extension: bounded taper using normalized window depth.
  float taper=cue?mix(1.35,0.5,clamp(p.z*.5+.5,0.,1.)):1.;
+ if(mode==0)width=min(lineWidth*taper,stripWidth);
  p.xy+=m*side*width*scale/viewport;
- gl_Position=vec4(p,1.0);across=side;ratio=lineWidth*taper/stripWidth;
+ gl_Position=vec4(p,1.0);across=side;ratio=min(1.0,lineWidth*taper/stripWidth);
 }`;
 const fragment = `#version 300 es
 precision highp float;
@@ -70,6 +71,7 @@ export class Renderer {
  setLines(lines:Line[]){
   const clean=lines.map(l=>l.filter((p,i)=>i===0||p.some((v,a)=>Math.abs(v-l[i-1][a])>1e-10))).filter(l=>l.length>1);
   const segments=clean.reduce((n,l)=>n+l.length-1,0);
+  if(segments>600_000)throw new Error("Rendergrenze: maximal 600.000 Segmente");
   const values=new Float32Array(segments*6*10);let offset=0;
   const emit=(line:Line,i:number,side:number)=>{
    values.set(line[i],offset);values.set(line[Math.max(0,i-1)],offset+3);

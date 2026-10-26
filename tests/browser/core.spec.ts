@@ -5,7 +5,7 @@ test('orthographic DDH transitions against independent visibility positions',asy
   const {renderer:r,crossing,defaults,cameraDefault}=(window as any).labTest;
   const outcomes:any[]=[];
   // Sampling vertical black line above horizontal foreground. Pixel centres
-  // lie at radius y+.5; choose samples at least 1.5px from predicted boundary.
+  // lie at radius y+.5. Near/onset: .5px from black edge; middle/saturation: ≥1.5px from predicted boundary. No boundary-centre samples.
   for(const [mode,delta,boundary] of [['ddh',.001,2],['ddh',.06,7],['ddh',.2,14],['halo',.001,14],['halo',.06,14],['lines',.06,2]] as const){
    r.setLines(crossing(delta).lines);r.render({...defaults,mode},cameraDefault(),512,512);
    const white=r.pixel(256,256+Math.max(0,boundary-2))[0];
@@ -26,4 +26,16 @@ test('orthographic DDH transitions against independent visibility positions',asy
  expect(result.diagnostic[0]).toBeCloseTo(120,0);expect(result.diagnostic[1]).toBeCloseTo(132,0);
  expect(result.swap).toEqual([255,0]);expect(result.tie).toBe(0);expect(errors).toEqual([]);
  await page.screenshot({path:'.artifacts/core.png'});
+});
+test('degenerate geometry, cueing and exact-depth ties are explicit',async({page})=>{
+ await page.goto('/probe.html');
+ const result=await page.evaluate(()=>{
+  const {renderer:r,crossing,defaults,cameraDefault}=(window as any).labTest;
+  const row=()=>{let n=0;for(let y=0;y<512;y++)if(r.pixel(256,y)[0]===0)n++;return n;};
+  r.setLines([[],[[0,0,0]],[[0,0,0],[0,0,0]],[[0,0,-.7],[0,0,.7]]]);r.render(defaults,cameraDefault(),512,512);const degenerate=row();
+  r.setLines([[[-.8,0,1],[.8,0,1]]]);r.render({...defaults,mode:'lines',lineWidth:10,cue:false},cameraDefault(),512,512);const plain=row();r.render({...defaults,mode:'lines',lineWidth:10,cue:true},cameraDefault(),512,512);const cued=row();
+  const lines=crossing(0).lines;r.setLines(lines);r.render({...defaults,mode:'halo'},cameraDefault(),512,512);const first=r.pixel(256,261)[0];r.setLines([...lines].reverse());r.render({...defaults,mode:'halo'},cameraDefault(),512,512);const reversed=r.pixel(256,261)[0];
+  return {degenerate,plain,cued,first,reversed};
+ });
+ expect(result.degenerate).toBe(0);expect(result.plain).toBe(10);expect(result.cued).toBeLessThan(result.plain);expect([result.first,result.reversed]).toEqual([255,0]);
 });

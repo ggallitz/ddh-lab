@@ -57,12 +57,12 @@ Internetzugang arbeiten können.
 |---|---|---|
 | M0 | erfüllt | ARM64 Ubuntu 26.04.1, Node 24.21.0/npm 11.19.0, Python 3.14.4; drei Quellen hashverifiziert; Fachkonventionen in RESEARCH |
 | M1 | erfüllt | WebGL2/GLSL kompiliert; Diagnosepixel 120→132 belegt veränderte Fenstertiefe und Verdeckung auf Chromium/SwiftShader |
-| M2 | offen | Renderer und unabhängige Prüffälle |
+| M2 | erfüllt | GPU-Pixel gegen unabhängige Verdeckungsungleichung: nah/mittel/gesättigt, Rollenwechsel, konstante Halos; Quellenreview bestanden |
 | M3 | offen | Import und Szenen |
 | M4 | offen | Erklärung und Bedienung |
 | M5 | offen | Vollständiger Durchlauf |
 
-Aktueller nächster Schritt: M2 — Kernprüfungen vervollständigen, danach Daten und Lehransichten integrieren.
+Aktueller nächster Schritt: M3 — vollständige Originaldaten und Import integrieren und dokumentieren.
 
 ## Wesentliche Entscheidungen
 
@@ -78,4 +78,8 @@ Git-Identität lokal vorhanden (Georg Gallitz). Die vorgefundenen unversionierte
 
 ### M1 — Grafikprobe und Review
 
-Chromium Headless Shell 148.0.7778.96 (Build 1248; genaue Browserversion beim Abschluss erneut protokollieren), WebGL 2.0, ANGLE Vulkan 1.3.0 / SwiftShader LLVM 10.0.0. Keine Hardwarebeschleunigung behauptet. Fehlende dynamische Bibliotheken ausschließlich als Projektdateien unter .cache/browser-libs entpackt; keine Systempakete installiert. Lokaler Testserver Port 4178, kein fremder Server wiederverwendet. GLSL-Review behob unterschiedliche int-Uniform-Präzision. Gemessene Diagnosewerte bei delta=.06: schwarze Mitte 120/255 (z=.47), weißes Fragment r=5.5px 132/255 (z≈.51714). Eine unveränderte Tiefe könnte dieses Ergebnis nicht liefern. Unabhängiger Quellenreview bestätigt den Kern; Cueing korrigiert, sodass nur L variiert und S konstant bleibt.
+Chromium Headless Shell / Google Chrome for Testing 156.0.8078.4 (Build 1248; mit --version ausgelesen), WebGL 2.0, ANGLE Vulkan 1.3.0 / SwiftShader LLVM 10.0.0. Keine Hardwarebeschleunigung behauptet. Fehlende dynamische Bibliotheken ausschließlich als Projektdateien unter .cache/browser-libs entpackt; keine Systempakete installiert. Lokaler Testserver Port 4178, kein fremder Server wiederverwendet. GLSL-Review behob unterschiedliche int-Uniform-Präzision. Gemessene Diagnosewerte bei delta=.06: schwarze Mitte 120/255 (z=.47), weißes Fragment r=5.5px 132/255 (z≈.51714). Eine unveränderte Tiefe könnte dieses Ergebnis nicht liefern. Unabhängiger Quellenreview bestätigt den Kern; Cueing korrigiert, sodass nur L variiert und S konstant bleibt.
+
+### M2 — wissenschaftlicher Kern
+
+Kontrollprobe unter /probe.html. S=28px, L=4px, dmax=.12: delta=.001 ergibt keinen Zusatzrand, delta=.06 Radius 7px (5px Zusatzrand), delta=.2 Radius14px (12px Zusatzrand). GPU prüft eindeutige Pixelzentren beiderseits der Grenzen, Rollenwechsel und konstante herkömmliche Halos. Keine Vollbildähnlichkeit als Orakel. Eigenständiger Review bestätigte Gleichung und Tiefenraum; feste Pixelbreiten/Zoomverhalten und analytische Enden bleiben explizite Abweichungen. Miter-Verbindungen sind begrenzt und nicht als Paper-Geometrie ausgegeben.
