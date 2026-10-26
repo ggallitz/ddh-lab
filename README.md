@@ -1,124 +1,149 @@
 # Depth-Dependent Halos Lab
 
-Startpaket für Georg Gallitz · Visual Computing Seminar · Stand 26.10.2026
+Lokales wissenschaftliches Lehrlabor zu Everts et al. (2009), für Georgs
+Visual-Computing-Seminar. TypeScript, direktes WebGL2, Vite; keine externen
+Laufzeitdienste und keine CDN-Abhängigkeit. Oberfläche auf Deutsch.
 
-## Was dieses Paket ist
+## Start
 
-Ein konkreter Entwicklungsauftrag für Codex mit Quelleninventar, Arbeitsplan,
-Gestaltung und Qualitätskriterien. Die Anwendung ist noch nicht implementiert.
-Die Originalarchive und das Paper wurden für die Vorbereitung heruntergeladen
-und untersucht. Ihre Programme wurden nicht ausgeführt. Auf Georgs VM wurde
-noch nichts eingerichtet oder getestet.
-
-## Ziel der Anwendung
-
-Eine lokal laufende wissenschaftliche Lehrdemo mit drei Ansichten:
-
-1. **Verstehen:** zwei sich im Bild kreuzende Linien, ein Regler für ihren
-   Tiefenabstand und eine schematische Seitenansicht.
-2. **Vergleichen:** identische Daten und Kamera mit einfachen Linien,
-   herkömmlichen Halos und DDH; zusätzliches Depth Cueing separat schaltbar.
-3. **Grenzen:** wenige vorbereitete Fälle mit verdeckten oder unübersichtlichen
-   Strukturen und einer klaren Untersuchungsfrage.
-
-Synthetische Szenen liefern kontrollierte Beispiele. Mindestens ein kleiner
-Original-Knotendatensatz und die Office-Strömung sollen lokal importierbar sein.
-Danach wird der mitgelieferte Fiber-tracts-Datensatz erprobt. Quelle, Datentyp,
-eventuelle Auswahl und tatsächliche Anzahl dargestellter Elemente sind sichtbar.
-Gespeicherte Ansichten und PNG-Export unterstützen einen kurzen Seminarvortrag.
-
-## Einrichtung auf der VM
-
-Das ZIP enthält bereits den obersten Ordner `ddh-lab`. Lade das Paket auf die VM.
-Die folgenden Befehle nehmen an, dass es unter
-`~/Downloads/DDH-Lab-Startpaket.zip` liegt und `~/projects/ddh-lab` noch nicht
-existiert. Bei einem anderen Downloadpfad nur diesen Pfad anpassen.
+Voraussetzungen: Node.js **24** mit npm, Python **3.10+**, Browser mit WebGL2.
+Getestet: Ubuntu 26.04.1 ARM64, Node 24.21.0, npm 11.19.0, Python 3.14.4.
 
 ```bash
-mkdir -p "$HOME/projects"
-python3 -m zipfile -e "$HOME/Downloads/DDH-Lab-Startpaket.zip" "$HOME/projects"
-cd "$HOME/projects/ddh-lab"
-git init
-codex --version
-codex --help
-```
-
-Dann Codex im Projekt starten. Die aktuell dokumentierte Variante mit
-automatischer Genehmigungsprüfung lautet:
-
-```bash
-codex --sandbox workspace-write --ask-for-approval on-request -c approvals_reviewer=auto_review
-```
-
-Die Unterstützung dieser Einstellung in deiner installierten CLI wurde nicht
-geprüft. Falls sie nicht unterstützt wird, den dokumentierten Basisstart nutzen:
-
-```bash
-codex --sandbox workspace-write --ask-for-approval on-request
-```
-
-Im Codex-Chat anschließend eingeben:
-
-> Lies AGENTS.md und CODEX_START.md. Führe den dort beschriebenen Auftrag durch
-> M0 bis M5 eigenständig aus. Prüfe die Abschlusskriterien jeder Phase und gehe
-> bei erfüllten Kriterien ohne erneute Rückfrage zur nächsten über. Beginne jetzt.
-
-Auto-review entscheidet über notwendige Genehmigungen; es erweitert die
-Sandbox nicht. Der Projektauftrag erlaubt lokale Entwicklung und Commits.
-Technische Genehmigungen können trotzdem nötig sein. Die globale
-Codex-Konfiguration muss für diesen Start nicht geändert werden.
-
-## Originalmaterialien reproduzierbar bereitstellen
-
-Diese Schritte kann Codex selbst übernehmen:
-
-```bash
+cd /home/georg/projects/ddh-lab
+npm ci --cache .cache/npm
 python3 scripts/fetch_references.py --extract
 python3 scripts/inspect_references.py
+python3 scripts/prepare_data.py
+npm run dev -- --port 4178 --strictPort
 ```
 
-Das erste Skript lädt drei festgelegte öffentliche Quellen, verifiziert Größe
-und SHA-256 und entpackt die ZIPs unter `references/upstream/`. Das zweite
-untersucht die lokalen Archive und schreibt `references/local-inspection.json`.
-Es wird kein Originalprogramm gestartet. Die historischen Ressourcen werden
-nicht mit diesem Starterpaket neu verteilt.
+Im Browser **http://127.0.0.1:4178** öffnen. Beenden mit Ctrl+C.
+Die Referenzskripte prüfen die festgelegten SHA-256 und führen keinen Fremdcode
+aus. Archive und Originaldaten bleiben lokal und werden nicht eingecheckt.
+Vorbereitete Daten liegen bereits unter `public/data/local/`. Ohne diese Daten
+funktionieren die synthetischen Szenen; die Oberfläche zeigt den fehlenden
+Vorbereitungsschritt an. Ein Downloadfehler wird nicht stillschweigend umgangen.
 
-Wenn ein Download nicht möglich ist, die drei Dateien anhand der URLs in
-`references/sources.json` manuell nach `references/downloads/` legen und die
-Befehle erneut ausführen. Abweichende Prüfsummen werden untersucht und nicht
-automatisch als gültig übernommen.
+Nach der Installation und Datenvorbereitung ist kein Internet nötig.
+Eine erneute Installation aus dem hier gefüllten Cache ist mit
+`npm ci --offline --cache .cache/npm` möglich und wurde geprüft.
 
-## Technischer Ausgangspunkt
+Für die Vorführung aus dem Produktionsbuild:
 
-Empfehlung: TypeScript, Vite und Three.js mit eigenen Shadern; eine kleine
-Oberfläche reicht. Codex prüft zuerst WebGL2 und die veränderte Fragmenttiefe
-in der tatsächlichen Umgebung. Eine begründete schlankere Alternative ist
-zulässig und wird in `docs/PLAN.md` festgehalten. Versionen erst nach Prüfung
-auswählen und im Lockfile festschreiben. Das spätere Ziel ist ein dokumentierter
-Start mit `npm ci` und `npm run dev`; diese Befehle existieren im Starterpaket
-noch nicht.
+```bash
+npm run build
+npm run preview -- --port 4178 --strictPort
+```
 
-## Dateien und Zuständigkeit
+Auch hier http://127.0.0.1:4178 öffnen. `dist/` enthält die lokal vorbereiteten
+Daten und die Kontrollprobe unter `/probe.html`. Nach Änderungen an den lokalen
+Daten den Build erneuern. Nicht per `file://` öffnen.
 
-| Datei | Zweck |
-|---|---|
-| `AGENTS.md` | Dauerhafte Arbeitsvereinbarung für Codex |
-| `CODEX_START.md` | Vollständiger Startauftrag |
-| `docs/PLAN.md` | Meilensteine, Status und wesentliche Entscheidungen |
-| `docs/RESEARCH.md` | Geprüfte Ressourcen, offene Fragen, fachliche Fundstellen |
-| `docs/DESIGN.md` | Wissenschaftliche Gestaltung und Bedienung |
-| `docs/VALIDATION.md` | Aussagekräftige fachliche und technische Prüfung |
-| `references/sources.json` | URLs, Größen und SHA-256 der geprüften Quellen |
-| `references/inspection-2026-10-26.json` | Bei der Vorbereitung erzeugtes Archiv-/Dateninventar |
-| `scripts/` | Bezug und Inspektion der Quellen |
+## Vorführung · zwei bis drei Minuten
 
-## Geprüfte Dokumentation
+1. **Verstehen**: Startszene DDH. Δz von 0,001 auf 0,060 und 0,200 bewegen.
+   Der zusätzliche weiße Rand wächst und sättigt. Negative Δz vertauschen
+   Vorder-/Hintergrund; das Seitenschema folgt dem Wechsel.
+2. **Vergleichen**: Wellenbündel. Einfache Linien → herkömmliche Halos → DDH
+   schalten. Daten und Kamera bleiben gleich. Optional Depth Cueing separat
+   ein- und ausschalten; es verjüngt nur die schwarze Linie.
+3. Im Datensatzmenü **Knot 10_136** oder **Air flow in office** wählen.
+   Optional die vollständigen **Fiber tracts** zeigen. Front-/Schrägansicht
+   wechseln oder mit Ziehen drehen, mit Mausrad zoomen.
+4. **Grenzen**: Verdeckte Struktur untersuchen, dann Schrägansicht.
+   Zweiter Fall: **Exakt gleiche Tiefe**. Ohne Tiefenunterschied existiert keine
+   Tiefenordnung. Ein Halo kann vollständig verdeckte Geometrie nicht enthüllen.
+5. **PNG exportieren** speichert die aktuelle Zeichenfläche ohne UI.
+   Diagnosebilder tragen `-diagnose` im Dateinamen. **Zurücksetzen** stellt
+   die gesamte ursprüngliche Zwei-Linien-Szene wieder her.
 
-- [Codex CLI](https://developers.openai.com/codex/cli/reference)
-- [Codex Auto-review](https://developers.openai.com/codex/sandboxing/auto-review)
-- [AGENTS.md](https://developers.openai.com/codex/guides/agents-md)
-- [Three.js ShaderMaterial](https://threejs.org/docs/pages/ShaderMaterial.html)
-- [Three.js WebGLRenderer](https://threejs.org/docs/pages/WebGLRenderer.html)
+Alle drei Ansichtstabs sind vorbereitete, reproduzierbare Zustände. Kamera auf
+der Zeichenfläche auch per Pfeiltasten drehen; `+`/`-` zoomen. Lokaler Import
+über den aufklappbaren SOP-Bereich, Typ aus `description.ini` ausdrücklich
+angeben. Das SOP-Format selbst kodiert den Unterschied zu Punktwolken nicht.
+Grenze: 64 MiB, 600.000 Punkte, 100.000 Sequenzen; maximal 600.000 Segmente.
 
-Diese Quellen wurden am 26.10.2026 geprüft. Die lokale VM-/CLI-Konfiguration
-bleibt separat zu prüfen.
+## Prüfung
+
+```bash
+npm test
+npm run build
+npm run test:gpu
+npm run test:production
+```
+
+`npm test`: 14 fachliche/Datenprüfungen, darunter alle fünf originalen
+Liniendateien gegen das unabhängige Inventar. Fehlende Originale sind explizite
+Skips und keine bestandenen Importprüfungen. Die Browserdaten vorher vorbereiten.
+`test:gpu` startet einen eigenen lokalen Server auf Port 4178; `test:production`
+prüft den zuvor gebauten Stand mit einem neuen Preview-Server. Kein anderer
+Server wird wiederverwendet. Browseraufnahmen liegen unter `.artifacts/`.
+
+Playwright benötigt einen Browser. Falls noch keiner vorhanden ist:
+
+```bash
+npx playwright install chromium
+```
+
+Optional kann `DDH_CHROMIUM=/absoluter/pfad/zum/chromium npm run test:gpu`
+einen vorhandenen Browser wählen. Das Skript erkennt vorhandene Playwright
+Headless Shells. Auf dieser minimalen Ubuntu-VM fehlen Browserbibliotheken und
+Schriften. Sie wurden ausschließlich **projektlokal** bereitgestellt:
+
+```bash
+python3 scripts/setup_browser_libs.py
+npm run test:gpu
+```
+
+Dieses optionale Ubuntu-Hilfsskript verwendet bestehende APT-Metadaten, lädt
+Bibliotheksarchive und eine Testschrift nach `.cache/` und entpackt sie dort.
+Es installiert keine Systempakete, benötigt kein sudo und ändert keine globale
+Konfiguration. Versions-/Hashnachweis: `.cache/browser-library-manifest.json`.
+Nur der Testprozess erhält private Bibliotheks-/Fontpfade. Andere Systeme mit
+funktionierendem Chromium benötigen diesen Schritt nicht.
+
+## Wissenschaftlicher Umfang und Grenzen
+
+Papernahe Nachimplementierung des linearen DDH-Kerns: Weiße Randfragmente
+erhalten eine fenstertiefenabhängige Verschiebung, schwarze Linien behalten z.
+Ein Pass, expliziter Tiefentest. Drei Modi, unabhängiges Depth Cueing,
+Fragmenttiefendiagnose, zwei kontrollierte Linien und deterministische Bündel.
+Originale: beide Knoten, vollständiger Office-Flow und vollständige Fiber tracts;
+Counts, Bounds und SHA-256 werden vor Anzeige geprüft. Quelldaten werden nur
+zentriert und uniform skaliert. Das Faser-Zusatzattribut wird nicht interpretiert.
+
+Bewusste Abweichungen: orthografische Kamera, Breiten in Framebuffer-Pixeln statt
+Modellraum, analytisches Profil ohne Originaltexturen, flache Enden und begrenzte
+Miter-Verbindungen, eigene begrenzte Cueing-Funktion. Kein Antialiasing; scharfe
+Ecken und nahezu blickparallele Segmente bleiben geometrische Grenzen. Bei
+extremen Breitenparametern kann Cueing den schwarzen Anteil bis S verbreitern.
+Exakte Tiefengleichheit hat Raster-/Zeichenreihenfolge-Ties. Kein
+Punktwolkenrenderer; Wasserströmung nur als Parsertest, kein Browserpreset.
+
+Die automatisierten Grafikprüfungen bestehen auf **Chromium 156.0.8078.4 mit
+ANGLE/SwiftShader**, also Softwaregrafik. Sie prüfen analytische Pixelübergänge
+und den adaptierten Originalshaderkern; keine behauptete Pixelidentität zur
+historischen Anwendung, keine Wahrnehmungsstudie und kein Hardware-GPU-Nachweis.
+Vor dem Seminar auf dem Präsentationsrechner den obigen Demo-Ablauf, Resize und
+Export durchgehen. Details/Ergebnisse in [docs/VALIDATION.md](docs/VALIDATION.md).
+
+## Quellen und Projektstruktur
+
+- [Originalpaper](https://tobias.isenberg.cc/personal/papers/Everts_2009_DDH.pdf),
+  §§3.2–3.4; [Projektseite](https://tobias.isenberg.cc/VideosAndDemos/Everts2009DDH).
+- [docs/RESEARCH.md](docs/RESEARCH.md): Quellen, Parameterabbildung, eigene
+  Herleitung und beobachtete Paper-Inkonsistenzen.
+- [docs/PLAN.md](docs/PLAN.md): einzige Meilenstein-/Statusquelle.
+- [docs/DESIGN.md](docs/DESIGN.md): Gestaltung und Bedienkonventionen.
+- `src/renderer.ts`: eigene GLSL-Shader und Streifengeometrie;
+  `model.ts`: Szenen/Definitionen; `sop.ts`: validierter Reader;
+  `main.ts`, `ui.ts`, `style.css`: Zustand, Bedienung und Darstellung.
+- `references/sources.json`: URLs/Hashes; Originaldateien unverändert unter
+  `references/upstream/`; lokale Herkunftshinweise zusätzlich in
+  `public/data/local/UPSTREAM-README.txt`.
+
+Die Bildlizenz der Projektseite gilt nicht pauschal für Code oder Datensätze.
+Insbesondere die originale DTI-Anerkennung bleibt im lokal mitgelieferten README
+erhalten. Keine Archive, fremden Programme oder großen Datensätze im Git-Stand;
+keine externe Veröffentlichung und kein Push.

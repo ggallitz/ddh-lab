@@ -59,10 +59,10 @@ Internetzugang arbeiten können.
 | M1 | erfüllt | WebGL2/GLSL kompiliert; Diagnosepixel 120→132 belegt veränderte Fenstertiefe und Verdeckung auf Chromium/SwiftShader |
 | M2 | erfüllt | GPU-Pixel gegen unabhängige Verdeckungsungleichung: nah/mittel/gesättigt, Rollenwechsel, konstante Halos; Quellenreview bestanden |
 | M3 | erfüllt | SOP-Integrität für 5 Original-Liniendateien; Knoten/Office/Fiber vollständig im Browser gerendert; SHA, Counts, Bounds geprüft |
-| M4 | erfüllt | Drei Ansichten, zwei Grenzfälle, Seitenschema mit Rollenwechsel, getrenntes Cueing/Diagnose; 1280×720 und1920×1080 aufgenommen/geprüft |
-| M5 | offen | Vollständiger Durchlauf |
+| M4 | erfüllt | Drei Ansichten, zwei Grenzfälle, Seitenschema mit Rollenwechsel, getrenntes Cueing/Diagnose; 1280×720 und 1920×1080 aufgenommen/geprüft |
+| M5 | lokal erfüllt; Präsentationsgerät offen | Offline-Neuinstallation, Build, 14 Node-Tests und 6 Browserprüfungen; Produktionsneustart/Export bestanden; Desktop-/Beamercheck explizit offen |
 
-Aktueller nächster Schritt: M5 — Produktionsbuild/Neustart, Dokumentation und Abschlussreview.
+Aktueller nächster Schritt: Auf dem Präsentationsrechner den dokumentierten Demo-Ablauf inklusive Resize und PNG prüfen. Lokaler Entwicklungsauftrag M0–M5 abgeschlossen; keine Veröffentlichung.
 
 ## Wesentliche Entscheidungen
 
@@ -86,10 +86,18 @@ Kontrollprobe unter /probe.html. S=28px, L=4px, dmax=.12: delta=.001 ergibt kein
 
 ### M3 — Daten und gemeinsame Kamera
 
-Eigener SOP-v0-Leser gegen Original-I/O-Quelle und unabhängiges Python-Inventar geprüft. Alle fünf Linienoriginale gelesen, Dragon explizit als Punkte abgewiesen. Browser lädt Knoten 752 Punkte/1 Linie, Office 278.849/786 und Fiber 548.013/17.176 vollständig; keine Auswahl. Für die Browserdarstellung: Schwerpunkt der Bounds auf Ursprung, uniforme Skalierung längster Achse auf1,7; Rohdaten unverändert. Browser verifiziert SHA-256, Counts und Bounds vor Normalisierung. Das Fiber-Zusatzattribut wird nur auf Endlichkeit geprüft. Private Importgrenze 64MiB/600.000 Punkte/100.000 Sequenzen, Renderer 600.000 Segmente; Water wird im Parser getestet, nicht als Browserpreset unterstützt. Vorallokierte Float32-Geometrie begrenzt Speicherspitzen. Original-README bleibt lokal verlinkt. Gemeinsame Kamera über alle Methoden nachgewiesen; Reset reproduzierbar.
+Eigener SOP-v0-Leser gegen Original-I/O-Quelle und unabhängiges Python-Inventar geprüft. Alle fünf Linienoriginale gelesen, Dragon explizit als Punkte abgewiesen. Browser lädt Knoten 752 Punkte/1 Linie, Office 278.849/786 und Fiber 548.013/17.176 vollständig; keine Auswahl. Für die Browserdarstellung: Schwerpunkt der Bounds auf Ursprung, uniforme Skalierung längster Achse auf 1,7; Rohdaten unverändert. Browser verifiziert SHA-256, Counts und Bounds vor Normalisierung. Das Fiber-Zusatzattribut wird nur auf Endlichkeit geprüft. Private Importgrenze 64MiB/600.000 Punkte/100.000 Sequenzen, Renderer 600.000 Segmente; Water wird im Parser getestet, nicht als Browserpreset unterstützt. Vorallokierte Float32-Geometrie begrenzt Speicherspitzen. Original-README bleibt lokal verlinkt. Gemeinsame Kamera über alle Methoden nachgewiesen; Reset reproduzierbar.
 
 ### M4 — Lehranwendung und unabhängiges Review
 
-Verstehen/Vergleichen/Grenzen sind reproduzierbare Vortragszustände mit Front- und Schrägkamera. Vergleich als große Einzelansicht; Methodenwechsel bewahrt Daten/Kamera/Breiten. Grenzfälle Verdeckung und exakte Tiefengleichheit getrennt. Seitenschema bildet auch negative delta korrekt auf den jeweiligen Vordergrund ab; ungültiges Orakel bei Kameraänderung/Cueing numerisch ausgeblendet. Diagnose hat Grauwertlegende. Tastatur-, Zeiger- und Zoomsteuerung, Resize, Importfehler und Wiederwahl importierter Daten geprüft. Ruhige monochrome Darstellung bei1280×720/1920×1080 visuell geprüft; die wesentlichen Regler bleiben sichtbar. VM hatte keine Fonts: private Testschrift über Fontconfig nur für den Browserprozess, keine Änderung der App-Schriftvorgabe.
+Verstehen/Vergleichen/Grenzen sind reproduzierbare Vortragszustände mit Front- und Schrägkamera. Vergleich als große Einzelansicht; Methodenwechsel bewahrt Daten/Kamera/Breiten. Grenzfälle Verdeckung und exakte Tiefengleichheit getrennt. Seitenschema bildet auch negative delta korrekt auf den jeweiligen Vordergrund ab; ungültiges Orakel bei Kameraänderung/Cueing numerisch ausgeblendet. Diagnose hat Grauwertlegende. Tastatur-, Zeiger- und Zoomsteuerung, Resize, Importfehler und Wiederwahl importierter Daten geprüft. Ruhige monochrome Darstellung bei 1280×720/1920×1080 visuell geprüft; die wesentlichen Regler bleiben sichtbar. VM hatte keine Fonts: private Testschrift über Fontconfig nur für den Browserprozess, keine Änderung der App-Schriftvorgabe.
 
 Unabhängige Reviews korrigierten Cueing im Linienmodus, das Seitenschema bei Rollenwechsel, gespeicherte Importdaten und Punktbudget vor Objektallokation. Zusätzlich wurde der unveränderte aktive Tiefen-/Farbkern des Originalfragmentshaders mit adaptierter GLSL-Syntax und analytisch ersetztem Profil/Endmaske ausgeführt. Er stimmt in den geprüften Fällen mit dem unabhängigen Orakel überein; keine Behauptung von Textur-/Demo-Pixelidentität.
+
+### M5 — Vortragsfassung und Abschlussreview
+
+Start-/Produktionsanleitung und Zwei-bis-drei-Minuten-Demo im README. Lokale Cache-Neuinstallation ohne Netzwerk, Typprüfung/Build und vollständiger Ablauf gegen neu gestarteten Produktionsserver bestanden. Kontrollprobe im Mehrseitenbuild enthalten; vorbereitete Originaldaten im dist, keine CDN-Laufzeitabhängigkeit. 14 Node-Fälle, sechs Browserfälle; zusätzlicher gezielter Produktionslauf der Kernregression. Abschließender unabhängiger Dokumentations-/Packagingreview fand keine blockierende Diskrepanz.
+
+Die tatsächliche Bildprüfung entdeckte nach dem ersten bestandenen Ablauf einen Office-Streifenfehler an lokalen blickparallelen Tangenten; Ursache behoben und sowohl kleine Regressionsszene als auch Bild-Bounds gegen normalisierte Originale ergänzt. Kein schwächerer Test oder umetikettiertes Gate. Vollständige Nachweise, behobene Fehler und Grenzen in VALIDATION; wissenschaftliche Interpretation in RESEARCH.
+
+Offen bleiben normaler Präsentationsbrowser, dessen Grafiktreiber und Beamer; automatisierte Grafikbelege stammen ausdrücklich aus SwiftShader. Keine Hardware-GPU- oder Wahrnehmungsevaluation behauptet. Alle Meilensteine lokal versioniert, keine Roharchive/Binärprogramme/Originaldaten eingecheckt, kein Push.

@@ -27,7 +27,7 @@ void main(){
  vec2 before=(p.xy-a.xy)*viewport, after=(b.xy-p.xy)*viewport;
  if(length(before)<0.00001)before=after;
  if(length(after)<0.00001)after=before;
- if(length(before)<0.00001){gl_Position=vec4(2,2,2,1);across=side;ratio=1.;return;}
+ if(length(before)<0.00001){gl_Position=vec4(p,1.0);across=side;ratio=1.;return;}
  vec2 n1=normalize(vec2(-before.y,before.x));
  vec2 n2=normalize(vec2(-after.y,after.x));
  vec2 m=n1+n2;if(length(m)<0.0001)m=n2;else m=normalize(m);

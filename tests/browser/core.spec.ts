@@ -33,9 +33,13 @@ test('degenerate geometry, cueing and exact-depth ties are explicit',async({page
   const {renderer:r,crossing,defaults,cameraDefault}=(window as any).labTest;
   const row=()=>{let n=0;for(let y=0;y<512;y++)if(r.pixel(256,y)[0]===0)n++;return n;};
   r.setLines([[],[[0,0,0]],[[0,0,0],[0,0,0]],[[0,0,-.7],[0,0,.7]]]);r.render(defaults,cameraDefault(),512,512);const degenerate=row();
+  // A projected zero-length first segment must collapse locally, never connect
+  // an off-screen sentinel to a valid neighbouring triangle.
+  r.setLines([[[0,0,-.5],[0,0,.5],[.5,0,.5]]]);r.render(defaults,cameraDefault(),512,512);
+  const bytes=new Uint8Array(512*512*4);r.gl.readPixels(0,0,512,512,r.gl.RGBA,r.gl.UNSIGNED_BYTE,bytes);let minX=512,maxX=-1;for(let i=0;i<bytes.length;i+=4)if(bytes[i]<128){minX=Math.min(minX,(i/4)%512);maxX=Math.max(maxX,(i/4)%512);}
   r.setLines([[[-.8,0,1],[.8,0,1]]]);r.render({...defaults,mode:'lines',lineWidth:10,cue:false},cameraDefault(),512,512);const plain=row();r.render({...defaults,mode:'lines',lineWidth:10,cue:true},cameraDefault(),512,512);const cued=row();
   const lines=crossing(0).lines;r.setLines(lines);r.render({...defaults,mode:'halo'},cameraDefault(),512,512);const first=r.pixel(256,261)[0];r.setLines([...lines].reverse());r.render({...defaults,mode:'halo'},cameraDefault(),512,512);const reversed=r.pixel(256,261)[0];
-  return {degenerate,plain,cued,first,reversed};
+  return {degenerate,minX,maxX,plain,cued,first,reversed};
  });
- expect(result.degenerate).toBe(0);expect(result.plain).toBe(10);expect(result.cued).toBeLessThan(result.plain);expect([result.first,result.reversed]).toEqual([255,0]);
+ expect(result.degenerate).toBe(0);expect(result.minX).toBeGreaterThanOrEqual(228);expect(result.maxX).toBeLessThanOrEqual(412);expect(result.plain).toBe(10);expect(result.cued).toBeLessThan(result.plain);expect([result.first,result.reversed]).toEqual([255,0]);
 });

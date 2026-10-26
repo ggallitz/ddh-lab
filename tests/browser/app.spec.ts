@@ -7,6 +7,7 @@ test('seminar flow, shared camera, reset, resize and PNG',async({page})=>{
  await page.setViewportSize({width:1280,height:720});await page.goto('/?test=1');await page.waitForFunction(()=>!!(window as any).labTest);
  const state=()=>page.evaluate(()=>(window as any).labTest.state());
  const initial=await state();
+ await page.locator('#delta').fill('-0.06');await expect(page.locator('#side')).toContainText('vertikale Linie');
  await page.locator('#delta').fill('0.12');await expect(page.locator('#delta-value')).toHaveText('0.120');
  await page.getByRole('button',{name:'Vergleichen',exact:true}).click();
  await expect(page.locator('#scene-title')).toHaveText('Wellenbündel');
@@ -15,7 +16,8 @@ test('seminar flow, shared camera, reset, resize and PNG',async({page})=>{
  for(const mode of ['lines','halo','ddh']){await page.locator(`input[name=mode][value=${mode}]`).check();const after=await state();expect(after.camera).toEqual(before.camera);expect(after.datasetId).toEqual(before.datasetId);expect(after.params.lineWidth).toEqual(before.params.lineWidth);}
  await page.locator('#cue').check();await expect(page.locator('#method-title')).toContainText('Depth Cueing');await page.locator('#cue').uncheck();
  await page.getByRole('button',{name:'Grenzen',exact:true}).click();await expect(page.locator('#scene-title')).toHaveText('Verdecktes Bündel');await page.getByRole('button',{name:'Schrägansicht',exact:true}).click();
- await page.getByRole('button',{name:'Exakt gleiche Tiefe',exact:true}).click();await expect(page.locator('#delta-value')).toHaveText('0.000');
+ await page.getByRole('button',{name:'Exakt gleiche Tiefe',exact:true}).click();await expect(page.locator('#delta-value')).toHaveText('0.000');await expect(page.locator('#side')).toContainText('keine eindeutige Vordergrundlinie');
+ await page.locator('#delta').fill('0.1');await expect(page.locator('#explanation')).toContainText('ungleich null');
  await page.getByRole('button',{name:'Zurücksetzen',exact:true}).click();expect(await state()).toEqual(initial);
  for(const [width,height] of [[1280,720],[1920,1080]]){
   await page.setViewportSize({width,height});await page.waitForTimeout(100);
@@ -32,7 +34,9 @@ test('complete original datasets load, render and report exact counts',async({pa
  test.setTimeout(120000);const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/?test=1');await expect(page.locator('#dataset option[value=office]')).toHaveCount(1);
  for(const [id,points,lines] of [['knot','752','1'],['office','278.849','786'],['fibers','548.013','17.176']] as const){
   const start=Date.now();await page.locator('#dataset').selectOption(id);await expect(page.locator('#caption')).toContainText(points,{timeout:60000});await expect(page.locator('#caption')).toContainText(`${lines} Linien`);
-  const pixels=await page.locator('#scene').evaluate((c:HTMLCanvasElement)=>{const gl=c.getContext('webgl2')!;const p=new Uint8Array(c.width*c.height*4);gl.readPixels(0,0,c.width,c.height,gl.RGBA,gl.UNSIGNED_BYTE,p);let black=0;for(let i=0;i<p.length;i+=4)if(p[i]<128)black++;return black;});expect(pixels).toBeGreaterThan(50);console.log(`${id}: rendered complete data in ${Date.now()-start}ms; black pixels ${pixels}`);await page.screenshot({path:`.artifacts/data-${id}.png`});
+  const pixels=await page.locator('#scene').evaluate((c:HTMLCanvasElement)=>{const gl=c.getContext('webgl2')!;const p=new Uint8Array(c.width*c.height*4);gl.readPixels(0,0,c.width,c.height,gl.RGBA,gl.UNSIGNED_BYTE,p);let black=0,minX=c.width,maxX=-1;for(let i=0;i<p.length;i+=4)if(p[i]<128){black++;const x=(i/4)%c.width;minX=Math.min(minX,x);maxX=Math.max(maxX,x);}return {black,minX,maxX,width:c.width,height:c.height};});expect(pixels.black).toBeGreaterThan(50);
+  // Every normalized point is within ±.85. Capped miters add at most S=28px.
+  expect(pixels.minX).toBeGreaterThanOrEqual(pixels.width/2-.85*pixels.height/2-28-1);expect(pixels.maxX).toBeLessThanOrEqual(pixels.width/2+.85*pixels.height/2+28+1);console.log(`${id}: rendered complete data in ${Date.now()-start}ms; black pixels ${pixels.black}`);await page.screenshot({path:`.artifacts/data-${id}.png`});
  }
  expect(errors).toEqual([]);
 });
