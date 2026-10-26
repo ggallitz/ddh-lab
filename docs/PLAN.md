@@ -58,11 +58,11 @@ Internetzugang arbeiten können.
 | M0 | erfüllt | ARM64 Ubuntu 26.04.1, Node 24.21.0/npm 11.19.0, Python 3.14.4; drei Quellen hashverifiziert; Fachkonventionen in RESEARCH |
 | M1 | erfüllt | WebGL2/GLSL kompiliert; Diagnosepixel 120→132 belegt veränderte Fenstertiefe und Verdeckung auf Chromium/SwiftShader |
 | M2 | erfüllt | GPU-Pixel gegen unabhängige Verdeckungsungleichung: nah/mittel/gesättigt, Rollenwechsel, konstante Halos; Quellenreview bestanden |
-| M3 | offen | Import und Szenen |
+| M3 | erfüllt | SOP-Integrität für 5 Original-Liniendateien; Knoten/Office/Fiber vollständig im Browser gerendert; SHA, Counts, Bounds geprüft |
 | M4 | offen | Erklärung und Bedienung |
 | M5 | offen | Vollständiger Durchlauf |
 
-Aktueller nächster Schritt: M3 — vollständige Originaldaten und Import integrieren und dokumentieren.
+Aktueller nächster Schritt: M4 — Lehransichten integrieren, Review und vollständigen Bedienablauf prüfen.
 
 ## Wesentliche Entscheidungen
 
@@ -83,3 +83,7 @@ Chromium Headless Shell / Google Chrome for Testing 156.0.8078.4 (Build 1248; mi
 ### M2 — wissenschaftlicher Kern
 
 Kontrollprobe unter /probe.html. S=28px, L=4px, dmax=.12: delta=.001 ergibt keinen Zusatzrand, delta=.06 Radius 7px (5px Zusatzrand), delta=.2 Radius14px (12px Zusatzrand). GPU prüft eindeutige Pixelzentren beiderseits der Grenzen, Rollenwechsel und konstante herkömmliche Halos. Keine Vollbildähnlichkeit als Orakel. Eigenständiger Review bestätigte Gleichung und Tiefenraum; feste Pixelbreiten/Zoomverhalten und analytische Enden bleiben explizite Abweichungen. Miter-Verbindungen sind begrenzt und nicht als Paper-Geometrie ausgegeben.
+
+### M3 — Daten und gemeinsame Kamera
+
+Eigener SOP-v0-Leser gegen Original-I/O-Quelle und unabhängiges Python-Inventar geprüft. Alle fünf Linienoriginale gelesen, Dragon explizit als Punkte abgewiesen. Browser lädt Knoten 752 Punkte/1 Linie, Office 278.849/786 und Fiber 548.013/17.176 vollständig; keine Auswahl. Für die Browserdarstellung: Schwerpunkt der Bounds auf Ursprung, uniforme Skalierung längster Achse auf1,7; Rohdaten unverändert. Browser verifiziert SHA-256, Counts und Bounds vor Normalisierung. Das Fiber-Zusatzattribut wird nur auf Endlichkeit geprüft. Private Importgrenze 64MiB/600.000 Punkte/100.000 Sequenzen, Renderer 600.000 Segmente; Water wird im Parser getestet, nicht als Browserpreset unterstützt. Vorallokierte Float32-Geometrie begrenzt Speicherspitzen. Original-README bleibt lokal verlinkt. Gemeinsame Kamera über alle Methoden nachgewiesen; Reset reproduzierbar.
