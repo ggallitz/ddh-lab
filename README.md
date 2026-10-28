@@ -1,149 +1,361 @@
-# Depth-Dependent Halos Lab
+# DDH-Lab — Interactive Depth-Dependent Halos
 
-Lokales wissenschaftliches Lehrlabor zu Everts et al. (2009), für Georgs
-Visual-Computing-Seminar. TypeScript, direktes WebGL2, Vite; keine externen
-Laufzeitdienste und keine CDN-Abhängigkeit. Oberfläche auf Deutsch.
+**Explore how depth-buffer manipulation turns simple black lines into readable 3D illustrations.**
 
-## Start
+A browser-based Visual Computing teaching lab built with **TypeScript, WebGL2,
+and Vite**. Compare plain lines, traditional halos, and depth-dependent halos
+using controlled synthetic scenes and optional, locally downloaded research data.
 
-Voraussetzungen: Node.js **24** mit npm, Python **3.10+**, Browser mit WebGL2.
-Getestet: Ubuntu 26.04.1 ARM64, Node 24.21.0, npm 11.19.0, Python 3.14.4.
+![DDH-Lab overview: intersecting lines, depth profile, and interactive controls](docs/images/overview.png)
+
+[Quick start](#getting-started) · [The method](#how-depth-dependent-halos-work) ·
+[Mathematics](#mathematical-foundations) · [Screenshots](#screenshots-and-demonstrations) ·
+[Validation](#testing-and-validation) · [References](#scientific-background-and-references)
+
+## Overview and Motivation
+
+Dense line drawings can hide spatial relationships: when everything is black,
+which line is in front? A white halo separates a foreground line from its
+background, but fixed halos can also break up closely packed bundles.
+
+DDH-Lab makes this trade-off interactive. Change depth separation and watch
+the additional white gap disappear for nearby lines, grow with separation, and
+reach a fixed maximum. The original research is by **Everts et al. (2009)**.
+This is an independent educational implementation, not the authors' software;
+it is not presented as endorsed or maintained by them.
+
+The application interface is currently **German**. The controls below include
+their on-screen labels; supporting research and validation notes are also German.
+
+## Features and Interactive Controls
+
+- **Three rendering modes:** plain lines, traditional constant halos, and DDH.
+  Method switching preserves the dataset, camera, and shared parameters.
+- **Three teaching presets:** Understand (*Verstehen*), Compare (*Vergleichen*),
+  and Limits (*Grenzen*). Selecting a preset resets its parameters and camera.
+- **Synthetic scenes:** two intersecting lines, a deterministic wave bundle,
+  and a bundle with hidden background structure.
+- **Inspectable parameters:** widths, depth separation/displacement, independent
+  depth cueing, and fragment-depth grayscale diagnostics.
+- **Front/oblique views**, pointer and keyboard camera control, and global reset.
+- **PNG export** of the current canvas without surrounding controls.
+- **Local SOP import** with format and size validation. Optional original presets
+  include two knots, office airflow, and fiber tracts after local preparation.
+- **Local operation:** no CDN or external runtime service after setup.
+
+| Control | On-screen label | Effect |
+| --- | --- | --- |
+| Depth separation Δz | Tiefenabstand Δz | Changes two-line geometry; positive puts horizontal in front **in Front view**, negative swaps roles |
+| Black width L | Linienbreite L | Full black width before cueing, in framebuffer pixels |
+| Strip width S | Streifenbreite S | Full line-plus-halo width, in framebuffer pixels |
+| Maximum displacement | Max. Tiefenverschiebung dmax | Maximum backward displacement of white DDH fragments in window depth |
+| Depth cueing | Depth Cueing | Educational extension varying black width with depth |
+| Depth diagnostic | Fragmenttiefe als Grauwert | Displaced fragment depth as grayscale: darker is nearer |
+| Camera/reset | Frontansicht / Schrägansicht / Zurücksetzen | Front view, oblique view, or complete reset |
+
+Drag to rotate; use the mouse wheel to zoom. With the canvas focused, arrow keys
+rotate and `+` / `-` zoom. Camera rotation can reverse depth ordering even when
+the cross still looks horizontal/vertical. Use **Frontansicht** before interpreting
+Δz as the current depth difference. The side panel limits its numerical reference
+to Front view without cueing. Widths use framebuffer pixels, not CSS pixels.
+
+## How Depth-Dependent Halos Work
+
+The lab uses one rendering pass:
+
+1. **Build view-aligned strips.** Each segment becomes two triangles. The vertex
+   shader widens it perpendicular to its projected direction, keeping its center
+   on the input line. Adjacent segments use bounded miter joins.
+2. **Classify fragments.** A central band is black; the remaining strip is white.
+   `L` controls full black width and `S` full strip width, with `0 < L < S`.
+3. **Displace white depth.** Black fragments retain their depth. White DDH
+   fragments receive increasing backward displacement toward the strip edge.
+4. **Resolve visibility.** Depth testing uses `LESS` with depth writes enabled.
+   Foreground white hides background black only while its displaced depth is
+   still nearer, creating a white gap that depends on separation.
+
+This changes fragment depth, not the input geometry. A background halo cannot
+erase a genuinely nearer black line under this rule. Traditional halos use the
+black/white strip without displacement; plain-line mode draws a narrow black strip.
+
+The core follows the [paper](https://tobias.isenberg.cc/personal/papers/Everts_2009_DDH.pdf),
+§§3.2–3.3, Eqs. 1–3 and Figure 3. Orthographic projection, pixel widths,
+analytic classification, bounded joins, and bounded cueing are lab choices.
+
+## Mathematical Foundations
+
+These equations describe the implemented straight-strip kernel **without cueing**.
+For signed perpendicular distance `r` from the centerline in framebuffer pixels,
+the normalized transverse distance is
+
+$$q = \frac{2|r|}{S}, \qquad 0 \le q \le 1.$$
+
+A fragment is black when
+
+$$|r| \le \frac{L}{2} \quad\Longleftrightarrow\quad q \le \frac{L}{S}.$$
+
+DDH uses the linear profile
+
+$$
+z' = \begin{cases}
+z, & \text{black fragment},\\
+z + d_{\max}q, & \text{white fragment}.
+\end{cases}
+$$
+
+Depth values and `dmax` are **dimensionless window/depth-buffer coordinates**,
+not metric world distances. Larger values are farther away. The lab projects
+rotated geometry orthographically using
+
+$$z_{\mathrm{window}} = \frac{1}{2} + \frac{z_{\mathrm{rotated}}}{4}.$$
+
+For two straight perpendicular lines in Front view, let
+$\delta=z_{\mathrm{back}}-z_{\mathrm{front}}\ge0$.
+Foreground white occludes background black when
+
+$$z_{\mathrm{front}} + \frac{2|r|d_{\max}}{S} < z_{\mathrm{back}}.$$
+
+Combining visibility with the white-fragment domain gives the **additional
+one-sided white gap beyond the black edge**:
+
+$$
+h = \max\!\left(0,\;\min\!\left(\frac{S}{2},\frac{S\delta}{2d_{\max}}\right)-\frac{L}{2}\right),
+\qquad d_{\max}>0.
+$$
+
+This is the project's independent visibility derivation, implemented in
+[`src/model.ts`](src/model.ts), rather than a literal copy of the paper's Appendix
+equation. It assumes fixed widths, Front view, no cueing, and excludes individual
+raster/depth ties. Figures 3 and 18 provide the reference construction.
+[RESEARCH.md](docs/RESEARCH.md) documents observed inconsistencies in the printed
+width relation and Appendix signs; these are not an author-issued erratum.
+
+With defaults `L=4 px`, `S=28 px`, `dmax=0.12`:
+
+| Depth separation δ | Derived extra gap h | Meaning |
+| --- | ---: | --- |
+| 0.001 | 0 px | No additional white separation |
+| 0.060 | 5 px | Intermediate depth-dependent halo |
+| 0.200 | 12 px | Saturated at the strip boundary |
+
+The gap starts above $\delta=d_{\max}L/S$ and saturates at
+$\delta=d_{\max}$. At fixed separation, increasing `dmax` can **reduce** the gap.
+The white-depth ramp does not restart at zero at the black edge. Traditional
+halos use zero displacement, yielding `(S−L)/2` for positive separation.
+Exact equality remains a separate tie case under `LESS`.
+
+## Screenshots and Demonstrations
+
+All images are real browser captures of this application using **synthetic data**,
+not paper figures or historical-demo images.
+[Capture settings and provenance](docs/images/README.md).
+
+### Two lines: intermediate separation
+
+![Horizontal foreground stays continuous; vertical background is interrupted by its halo](docs/images/two-lines.png)
+
+Front view, DDH, `L=4`, `S=28`, `dmax=0.12`, `Δz=0.06`; cueing off.
+
+### Changing depth separation
+
+| Nearby: Δz = 0.001 | Farther apart: Δz = 0.200 |
+| --- | --- |
+| ![Nearby lines without additional white separation](docs/images/halo-near.png) | ![Separated lines with a halo saturated at strip width](docs/images/halo-saturated.png) |
+
+Only Δz changes from the two-line settings above.
+
+### Line bundle
+
+![Synthetic wave bundle in DDH mode with application controls](docs/images/line-bundle.png)
+
+### Parameter controls
+
+![Actual controls for method, depths, widths, cueing, diagnostic, and camera](docs/images/parameters.png)
+
+### A two-minute walkthrough
+
+1. In **Verstehen**, try Δz `0.001`, `0.060`, then `0.200` to see gap growth and
+   saturation. Use a negative value to swap foreground/background.
+2. Select **Vergleichen**. Switch plain lines → traditional halos → DDH with a
+   fixed camera. Toggle cueing separately.
+3. Select **Grenzen**, inspect hidden structure, then choose **Schrägansicht**.
+   Try **Exakt gleiche Tiefe** to examine the absence of a unique depth ordering.
+4. Export a PNG; **Zurücksetzen** restores the initial scene and parameters.
+
+## Getting Started
+
+### Requirements
+
+- **Node.js 24** and npm; tested with Node 24.21.0 / npm 11.19.0.
+- A **WebGL2** browser.
+- **Python 3.10+**, only for optional reference/data preparation.
+
+### Run the synthetic lab
+
+From your cloned repository directory:
 
 ```bash
-cd /home/georg/projects/ddh-lab
-npm ci --cache .cache/npm
-python3 scripts/fetch_references.py --extract
-python3 scripts/inspect_references.py
-python3 scripts/prepare_data.py
+npm ci
 npm run dev -- --port 4178 --strictPort
 ```
 
-Im Browser **http://127.0.0.1:4178** öffnen. Beenden mit Ctrl+C.
-Die Referenzskripte prüfen die festgelegten SHA-256 und führen keinen Fremdcode
-aus. Archive und Originaldaten bleiben lokal und werden nicht eingecheckt.
-Vorbereitete Daten liegen bereits unter `public/data/local/`. Ohne diese Daten
-funktionieren die synthetischen Szenen; die Oberfläche zeigt den fehlenden
-Vorbereitungsschritt an. Ein Downloadfehler wird nicht stillschweigend umgangen.
+Open **http://127.0.0.1:4178**. Stop with `Ctrl+C`. Python and research downloads
+are unnecessary for synthetic scenes. A fresh clone displays a notice that
+optional original datasets have not been prepared.
 
-Nach der Installation und Datenvorbereitung ist kein Internet nötig.
-Eine erneute Installation aus dem hier gefüllten Cache ist mit
-`npm ci --offline --cache .cache/npm` möglich und wurde geprüft.
+### Optional: prepare original datasets locally
 
-Für die Vorführung aus dem Produktionsbuild:
+```bash
+python3 scripts/fetch_references.py --extract
+python3 scripts/inspect_references.py
+python3 scripts/prepare_data.py
+```
+
+These scripts download pinned public references, verify size/SHA-256, safely
+extract archives, and prepare four complete original line datasets under
+`public/data/local/`. They do not run upstream programs. Original files and
+acknowledgements remain intact. Downloads and prepared data are **gitignored
+and absent from a fresh clone**.
+
+The browser validates preset hashes, counts, and bounds before centering and
+uniformly scaling coordinates. The fiber data differs from the paper's dataset;
+its extra scalar attribute is validated but not interpreted. For private imports,
+choose the declared type from the source `description.ini`: the supported SOP
+header does not distinguish lines from points. Point rendering is rejected.
+Import limits: 64 MiB, 600,000 points, 100,000 sequences; renderer limit:
+600,000 segments.
+
+After dependencies and desired data are installed, local use needs no Internet.
+Offline npm reinstallation requires a previously populated cache; the repository
+does not supply one.
+
+### Production build and local preview
 
 ```bash
 npm run build
 npm run preview -- --port 4178 --strictPort
 ```
 
-Auch hier http://127.0.0.1:4178 öffnen. `dist/` enthält die lokal vorbereiteten
-Daten und die Kontrollprobe unter `/probe.html`. Nach Änderungen an den lokalen
-Daten den Build erneuern. Nicht per `file://` öffnen.
+Open the same URL. `/probe.html` is the minimal rendering test surface. Use HTTP,
+not `file://`.
 
-## Vorführung · zwei bis drei Minuten
+**Build contents:** Vite copies `public/` into `dist/`, including locally prepared
+original data. Review redistribution rights before sharing that build; ignoring
+data in Git does not exclude it from a build. A fresh clone without prepared data
+produces a synthetic-only build. Current root-relative URLs assume root hosting;
+GitHub Pages repository-subpath hosting requires additional base-path work.
+No hosted live demo is claimed here.
 
-1. **Verstehen**: Startszene DDH. Δz von 0,001 auf 0,060 und 0,200 bewegen.
-   Der zusätzliche weiße Rand wächst und sättigt. Negative Δz vertauschen
-   Vorder-/Hintergrund; das Seitenschema folgt dem Wechsel.
-2. **Vergleichen**: Wellenbündel. Einfache Linien → herkömmliche Halos → DDH
-   schalten. Daten und Kamera bleiben gleich. Optional Depth Cueing separat
-   ein- und ausschalten; es verjüngt nur die schwarze Linie.
-3. Im Datensatzmenü **Knot 10_136** oder **Air flow in office** wählen.
-   Optional die vollständigen **Fiber tracts** zeigen. Front-/Schrägansicht
-   wechseln oder mit Ziehen drehen, mit Mausrad zoomen.
-4. **Grenzen**: Verdeckte Struktur untersuchen, dann Schrägansicht.
-   Zweiter Fall: **Exakt gleiche Tiefe**. Ohne Tiefenunterschied existiert keine
-   Tiefenordnung. Ein Halo kann vollständig verdeckte Geometrie nicht enthüllen.
-5. **PNG exportieren** speichert die aktuelle Zeichenfläche ohne UI.
-   Diagnosebilder tragen `-diagnose` im Dateinamen. **Zurücksetzen** stellt
-   die gesamte ursprüngliche Zwei-Linien-Szene wieder her.
-
-Alle drei Ansichtstabs sind vorbereitete, reproduzierbare Zustände. Kamera auf
-der Zeichenfläche auch per Pfeiltasten drehen; `+`/`-` zoomen. Lokaler Import
-über den aufklappbaren SOP-Bereich, Typ aus `description.ini` ausdrücklich
-angeben. Das SOP-Format selbst kodiert den Unterschied zu Punktwolken nicht.
-Grenze: 64 MiB, 600.000 Punkte, 100.000 Sequenzen; maximal 600.000 Segmente.
-
-## Prüfung
+## Testing and Validation
 
 ```bash
 npm test
 npm run build
-npm run test:gpu
-npm run test:production
 ```
 
-`npm test`: 14 fachliche/Datenprüfungen, darunter alle fünf originalen
-Liniendateien gegen das unabhängige Inventar. Fehlende Originale sind explizite
-Skips und keine bestandenen Importprüfungen. Die Browserdaten vorher vorbereiten.
-`test:gpu` startet einen eigenen lokalen Server auf Port 4178; `test:production`
-prüft den zuvor gebauten Stand mit einem neuen Preview-Server. Kein anderer
-Server wird wiederverwendet. Browseraufnahmen liegen unter `.artifacts/`.
+Node tests cover visibility, scene-depth mapping, normalization, and SOP integrity
+and limits. Original-data cases explicitly skip when local sources are absent;
+skips do not demonstrate successful data validation.
 
-Playwright benötigt einen Browser. Falls noch keiner vorhanden ist:
+For browser checks, install Playwright Chromium, ensure its OS libraries are
+available, and stop any server occupying port 4178:
 
 ```bash
 npx playwright install chromium
+# Synthetic rendering checks, without research downloads:
+npm run test:gpu -- tests/browser/core.spec.ts
 ```
 
-Optional kann `DDH_CHROMIUM=/absoluter/pfad/zum/chromium npm run test:gpu`
-einen vorhandenen Browser wählen. Das Skript erkennt vorhandene Playwright
-Headless Shells. Auf dieser minimalen Ubuntu-VM fehlen Browserbibliotheken und
-Schriften. Sie wurden ausschließlich **projektlokal** bereitgestellt:
+After optional references and data are prepared, run the complete suite:
 
 ```bash
-python3 scripts/setup_browser_libs.py
 npm run test:gpu
+npm run build
+npm run test:production
 ```
 
-Dieses optionale Ubuntu-Hilfsskript verwendet bestehende APT-Metadaten, lädt
-Bibliotheksarchive und eine Testschrift nach `.cache/` und entpackt sie dort.
-Es installiert keine Systempakete, benötigt kein sudo und ändert keine globale
-Konfiguration. Versions-/Hashnachweis: `.cache/browser-library-manifest.json`.
-Nur der Testprozess erhält private Bibliotheks-/Fontpfade. Andere Systeme mit
-funktionierendem Chromium benötigen diesen Schritt nicht.
+The full suite requires that preparation for original-data loading/import and an
+adapted original-shader comparison. Browser tests start their own server on 4178
+and do not reuse an existing one. Generated captures go to `.artifacts/`.
+`DDH_CHROMIUM=/absolute/path/to/chromium` selects an existing browser.
+If 4178 is occupied, choose a free port, for example
+`DDH_PORT=4190 npm run test:production` (POSIX shell syntax).
 
-## Wissenschaftlicher Umfang und Grenzen
+On the minimal Ubuntu development VM, the optional
+`python3 scripts/setup_browser_libs.py` unpacks missing browser libraries and a
+test font into `.cache/` using existing APT metadata. It needs no sudo and changes
+no system packages or global configuration. Other systems with working Chromium
+do not need this VM-specific helper.
 
-Papernahe Nachimplementierung des linearen DDH-Kerns: Weiße Randfragmente
-erhalten eine fenstertiefenabhängige Verschiebung, schwarze Linien behalten z.
-Ein Pass, expliziter Tiefentest. Drei Modi, unabhängiges Depth Cueing,
-Fragmenttiefendiagnose, zwei kontrollierte Linien und deterministische Bündel.
-Originale: beide Knoten, vollständiger Office-Flow und vollständige Fiber tracts;
-Counts, Bounds und SHA-256 werden vor Anzeige geprüft. Quelldaten werden nur
-zentriert und uniform skaliert. Das Faser-Zusatzattribut wird nicht interpretiert.
+Documented graphics checks use Chromium 156.0.8078.4 with ANGLE/SwiftShader
+**software rendering**. They verify analytical pixel transitions, depth changes,
+data integrity, and interaction; they establish neither hardware-GPU compatibility
+nor perceptual superiority. [VALIDATION.md](docs/VALIDATION.md) records evidence
+and remaining presentation-device checks.
 
-Bewusste Abweichungen: orthografische Kamera, Breiten in Framebuffer-Pixeln statt
-Modellraum, analytisches Profil ohne Originaltexturen, flache Enden und begrenzte
-Miter-Verbindungen, eigene begrenzte Cueing-Funktion. Kein Antialiasing; scharfe
-Ecken und nahezu blickparallele Segmente bleiben geometrische Grenzen. Bei
-extremen Breitenparametern kann Cueing den schwarzen Anteil bis S verbreitern.
-Exakte Tiefengleichheit hat Raster-/Zeichenreihenfolge-Ties. Kein
-Punktwolkenrenderer; Wasserströmung nur als Parsertest, kein Browserpreset.
+## Project Structure
 
-Die automatisierten Grafikprüfungen bestehen auf **Chromium 156.0.8078.4 mit
-ANGLE/SwiftShader**, also Softwaregrafik. Sie prüfen analytische Pixelübergänge
-und den adaptierten Originalshaderkern; keine behauptete Pixelidentität zur
-historischen Anwendung, keine Wahrnehmungsstudie und kein Hardware-GPU-Nachweis.
-Vor dem Seminar auf dem Präsentationsrechner den obigen Demo-Ablauf, Resize und
-Export durchgehen. Details/Ergebnisse in [docs/VALIDATION.md](docs/VALIDATION.md).
+```text
+src/
+  renderer.ts          WebGL2 setup, strip geometry, vertex/fragment shaders
+  model.ts             Scenes, parameters, halo-width derivation
+  main.ts              State, controls, loading, camera, PNG export
+  ui.ts / style.css    German interface and styling
+  sop.ts               Validating SOP v0 line-data reader
+  probe.ts             Minimal renderer test surface
+tests/                 Node and browser checks
+scripts/               Reference downloads and local data/browser setup
+references/            Pinned sources and dataset inventory
+docs/
+  images/              Actual application screenshots and capture settings
+  RESEARCH.md          Sources, conventions, independent derivations
+  VALIDATION.md        Criteria, results, limitations
+  DESIGN.md            Interface and demo design
+  PLAN.md              Milestones and current status
+```
 
-## Quellen und Projektstruktur
+Rendering uses WebGL2 directly; there is no UI framework or Three.js dependency.
+TypeScript, Vite, and Playwright versions are pinned by the lockfile.
 
-- [Originalpaper](https://tobias.isenberg.cc/personal/papers/Everts_2009_DDH.pdf),
-  §§3.2–3.4; [Projektseite](https://tobias.isenberg.cc/VideosAndDemos/Everts2009DDH).
-- [docs/RESEARCH.md](docs/RESEARCH.md): Quellen, Parameterabbildung, eigene
-  Herleitung und beobachtete Paper-Inkonsistenzen.
-- [docs/PLAN.md](docs/PLAN.md): einzige Meilenstein-/Statusquelle.
-- [docs/DESIGN.md](docs/DESIGN.md): Gestaltung und Bedienkonventionen.
-- `src/renderer.ts`: eigene GLSL-Shader und Streifengeometrie;
-  `model.ts`: Szenen/Definitionen; `sop.ts`: validierter Reader;
-  `main.ts`, `ui.ts`, `style.css`: Zustand, Bedienung und Darstellung.
-- `references/sources.json`: URLs/Hashes; Originaldateien unverändert unter
-  `references/upstream/`; lokale Herkunftshinweise zusätzlich in
-  `public/data/local/UPSTREAM-README.txt`.
+## Scientific Background and References
 
-Die Bildlizenz der Projektseite gilt nicht pauschal für Code oder Datensätze.
-Insbesondere die originale DTI-Anerkennung bleibt im lokal mitgelieferten README
-erhalten. Keine Archive, fremden Programme oder großen Datensätze im Git-Stand;
-keine externe Veröffentlichung und kein Push.
+**Maarten H. Everts, Henk Bekker, Jos B. T. M. Roerdink, and Tobias Isenberg (2009).**
+*Depth-Dependent Halos: Illustrative Rendering of Dense Line Data.*
+IEEE Transactions on Visualization and Computer Graphics, **15**(6), 1299–1306.
+[DOI: 10.1109/TVCG.2009.138](https://doi.org/10.1109/TVCG.2009.138).
+
+- [Original paper](https://tobias.isenberg.cc/personal/papers/Everts_2009_DDH.pdf):
+  §§3.2–3.3, Figures 3/18, and Appendix A underpin the discussion.
+- [Authors' project page](https://tobias.isenberg.cc/VideosAndDemos/Everts2009DDH):
+  research, original demo, videos, and supplementary materials.
+- [Pinned manifest](references/sources.json): download URLs, sizes, and hashes.
+- [Research notes](docs/RESEARCH.md): original shader correspondence, provenance,
+  conventions, and interpretation of printed inconsistencies.
+
+The broader technique also addresses points; **this lab implements lines only**.
+Its validation does not reproduce the paper's evaluation.
+
+### Rights and attribution
+
+No project license has been selected or added. Third-party papers, programs,
+shaders, textures, and datasets are downloaded separately and retain their own
+rights and acknowledgements. The project page's license for specific example
+images is not a blanket code/data license. Repository screenshots use only this
+application's synthetic scenes.
+
+## Limitations and Future Improvements
+
+- **Adaptation:** orthographic projection, fixed pixel widths, analytical profile,
+  flat ends, bounded miters, and custom cueing; no historical-demo pixel identity.
+- **Raster/geometry:** no antialiasing; sharp turns and nearly view-parallel
+  segments remain difficult. Cueing may expand black width up to strip width.
+- **Depth:** depth is not metric; equality/raster boundaries can have precision
+  and submission-order ties. Halos cannot reveal fully hidden geometry.
+- **Scope:** no point-cloud renderer, stereo, or scientific filtering. Water flow
+  is a parser check, not an application preset.
+- **Environment:** a manual presentation-browser/driver/projector demo, resize,
+  and export check remains necessary beyond software-rendered tests.
+
+Future directions include English UI text, subpath-safe hosting, more hardware
+browser coverage, improved joins/ends, and a separately specified perspective
+mode. These are possibilities, not implemented features.

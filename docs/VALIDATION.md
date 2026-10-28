@@ -215,3 +215,32 @@ menschlichen Wahrnehmung.
   `DDH_CHROMIUM=/pfad/zum/zielbrowser npm run test:production` für denselben
   automatisierten Kern auf dem Zielrechner. Softwaretest ist kein bestandenes
   Hardware-/Präsentationsgate.
+
+## Veröffentlichungsvorbereitung · 28.10.2026
+
+- `npm ci --offline --cache .cache/npm`: erfolgreich nach regulärer Eskalation
+  für den in der Sandbox blockierten esbuild-Installationscheck. Keine Abhängigkeit
+  oder Rendererquelle geändert.
+- `npm test`: 14 bestanden, keine Skips, lokale Originalquellen vorhanden.
+- `npm run build`: Typprüfung und Produktionsbuild bestanden.
+- `DDH_PORT=4190 npm run test:production`: alle sechs Browserprüfungen bestanden,
+  einschließlich Originaldaten, SOP-Import, PNG und Originalshaderkern. Der erste
+  Lauf mit Standardport 4178 stoppte wegen eines bereits laufenden Servers; dieser
+  wurde nicht beendet oder wiederverwendet. Neue optionale Portkonfiguration
+  validiert Ganzzahl/Bereich und verwendet denselben Port für Server und Browser.
+- Sechs neue PNGs unter `docs/images/` direkt aus der Anwendung aufgenommen;
+  Übersicht, Zwei-Linien-Mitte, Nah-/Sättigungsfall, Wellenbündel, Parameter.
+  Chromium 156.0.8078.4, WebGL2/ANGLE/SwiftShader, 1440×1000, DPR 1.
+  Übersicht, Bündel und mittlere/gesättigte Linienansicht visuell betrachtet;
+  keine Seitenausführungsfehler. Zustände/Herkunft in `docs/images/README.md`.
+- Unabhängiger Review bestätigt README-Gleichungen/Quellenangaben sowie portable
+  Startanweisungen, Download-Abgrenzung, Git-Ignore-Regeln und Testportänderung.
+- Separate Quellkopie ohne Referenzdownloads/Originaldaten: Offline-Installation,
+  Typprüfung und Build bestanden; acht Node-Tests bestanden, sechs Originalfälle
+  ausdrücklich übersprungen. Im erzeugten `dist/` lagen keine SOP-Datensätze.
+  Damit ist der dokumentierte synthetische Einstieg unabhängig von lokalen Daten.
+- `DDH_PORT=4191 npm run test:gpu -- tests/browser/core.spec.ts`: beide Kernprüfungen
+  gegen den Entwicklungsserver bestanden; abschließender Build erneut bestanden.
+
+Diese Prüfungen liefern weiterhin keinen Hardware-/Beamer-Nachweis. Es wurde keine
+Webanwendung bereitgestellt und kein `dist/` mit Originaldaten veröffentlicht.

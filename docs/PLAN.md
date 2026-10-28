@@ -62,7 +62,7 @@ Internetzugang arbeiten können.
 | M4 | erfüllt | Drei Ansichten, zwei Grenzfälle, Seitenschema mit Rollenwechsel, getrenntes Cueing/Diagnose; 1280×720 und 1920×1080 aufgenommen/geprüft |
 | M5 | lokal erfüllt; Präsentationsgerät offen | Offline-Neuinstallation, Build, 14 Node-Tests und 6 Browserprüfungen; Produktionsneustart/Export bestanden; Desktop-/Beamercheck explizit offen |
 
-Aktueller nächster Schritt: Auf dem Präsentationsrechner den dokumentierten Demo-Ablauf inklusive Resize und PNG prüfen. Lokaler Entwicklungsauftrag M0–M5 abgeschlossen; keine Veröffentlichung.
+Aktueller nächster Schritt: GitHub-Authentifizierung herstellen und die ausdrücklich verlangte Freigabe für eine öffentliche Veröffentlichung einholen; danach Repository anlegen und ohne Force-Push veröffentlichen. Die lokale Veröffentlichungsvorbereitung vom 28.10. ist umgesetzt. Präsentationsgerät/Beamer bleiben separat offen.
 
 ## Wesentliche Entscheidungen
 
@@ -101,3 +101,27 @@ Start-/Produktionsanleitung und Zwei-bis-drei-Minuten-Demo im README. Lokale Cac
 Die tatsächliche Bildprüfung entdeckte nach dem ersten bestandenen Ablauf einen Office-Streifenfehler an lokalen blickparallelen Tangenten; Ursache behoben und sowohl kleine Regressionsszene als auch Bild-Bounds gegen normalisierte Originale ergänzt. Kein schwächerer Test oder umetikettiertes Gate. Vollständige Nachweise, behobene Fehler und Grenzen in VALIDATION; wissenschaftliche Interpretation in RESEARCH.
 
 Offen bleiben normaler Präsentationsbrowser, dessen Grafiktreiber und Beamer; automatisierte Grafikbelege stammen ausdrücklich aus SwiftShader. Keine Hardware-GPU- oder Wahrnehmungsevaluation behauptet. Alle Meilensteine lokal versioniert, keine Roharchive/Binärprogramme/Originaldaten eingecheckt, kein Push.
+
+### 28.10.2026 — Vorbereitung der GitHub-Veröffentlichung
+
+Neuer Nutzerauftrag erlaubt Dokumentations-/Packagingarbeit, lokale Commits und
+anschließenden Push; öffentliches Anlegen oder Sichtbarmachen verlangt vorher
+eine ausdrückliche Freigabe. Englisches README mit verifizierten Gleichungen,
+korrektem bibliografischem Titel, portablen Startanweisungen und sechs echten
+Screenshots rein synthetischer Szenen erstellt. Keine Lizenz hinzugefügt und
+keine Änderung am wissenschaftlichen Renderingverhalten. `.gitignore` um lokale
+Zugangsdaten-/Editor-/Temporärdateien ergänzt. `DDH_PORT` macht den Browser-Testport
+konfigurierbar; der Standard 4178 war durch einen fremden Server belegt.
+
+Quell-/Historienprüfung fand keine gängigen Token-/Private-Key-Muster, Archive,
+Originaldaten oder Fremdbinärdateien. Git-Autorenname/-E-Mail bleiben als bestehende
+öffentliche Metadaten erhalten; keine Historie umgeschrieben. Lokal vorbereitete
+Originaldaten werden weiterhin von Vite nach `dist/` kopiert; dieses ignorierte
+Buildverzeichnis wird nicht veröffentlicht. Ein öffentlicher Quellcode-Clone
+enthält nur synthetische Szenen bis zum optionalen eigenen Datendownload.
+
+Git hat Branch `main` und bislang keinen Remote. `gh` und API-Anmeldung fehlen;
+vorhandene GitHub-SSH-Konfiguration wurde geprüft, Anmeldung abgewiesen
+(`Permission denied (publickey)`). GitHub-Integration zur Verbindung angeboten.
+Kein Repository angelegt und kein Push vor Freigabe. Prüfbelege dieser Runde
+stehen in VALIDATION; unabhängige wissenschaftliche und Packagingreviews bestanden.
